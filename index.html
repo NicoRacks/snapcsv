@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnapCSV — Privacy Policy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #1a1a2e;
+      background: #f8f8fc;
+    }
+
+    header {
+      background: #5b52e0;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      color: #ffffff;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    header p {
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #eeeef8;
+    }
+
+    p {
+      color: #3a3a5a;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      color: #3a3a5a;
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+
+    ul li {
+      margin-bottom: 6px;
+    }
+
+    .highlight-box {
+      background: #f0eefc;
+      border-left: 4px solid #5b52e0;
+      border-radius: 4px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      color: #2a2a4a;
+      font-weight: 500;
+    }
+
+    a {
+      color: #5b52e0;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+      color: #8a8aaa;
+      border-top: 1px solid #eeeef8;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>SnapCSV — Privacy Policy</h1>
+  <p>Last updated: April 14, 2026</p>
+</header>
+
+<main>
+
+  <div class="highlight-box">
+    <p>SnapCSV does not collect, transmit, or store any personal data on external servers. All data stays on your device.</p>
+  </div>
+
+  <section>
+    <h2>Overview</h2>
+    <p>SnapCSV is a Chrome extension that lets you export HTML tables from any webpage to a CSV file. This privacy policy explains what data the extension accesses, how it uses that data, and what is never collected.</p>
+  </section>
+
+  <section>
+    <h2>Data We Access</h2>
+    <p>SnapCSV accesses only the minimum data required to function:</p>
+    <ul>
+      <li><strong>Page content (active tab only):</strong> When you click the extension icon, SnapCSV reads the HTML table structure of the current tab so it can display a preview and generate a CSV file. This data is processed locally in your browser and is never transmitted anywhere.</li>
+      <li><strong>Export count:</strong> A local counter tracks how many exports you have made today to enforce the free tier limit (10 per day). This counter is stored locally in <code>chrome.storage.local</code> and is never sent to any server.</li>
+      <li><strong>License key (Pro users only):</strong> If you purchase a Pro license, your license key and instance ID are stored in <code>chrome.storage.local</code>. The key is sent to the LemonSqueezy API solely to verify that your license is valid. No other data is included in this request.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Data We Do Not Collect</h2>
+    <ul>
+      <li>We do not collect names, email addresses, or any personally identifiable information.</li>
+      <li>We do not track which websites you visit or which tables you export.</li>
+      <li>We do not use analytics, telemetry, or crash reporting services.</li>
+      <li>We do not store any page content, table data, or CSV contents on any server.</li>
+      <li>We do not sell, share, or transfer any data to third parties.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Local Storage</h2>
+    <p>The following data is stored locally on your device using <code>chrome.storage.local</code> and never leaves your browser:</p>
+    <ul>
+      <li><code>exportCount</code> — number of exports made today</li>
+      <li><code>exportDate</code> — today's date (used to reset the daily counter)</li>
+      <li><code>licenseKey</code> — your Pro license key (if activated)</li>
+      <li><code>licenseInstanceId</code> — the instance ID returned by LemonSqueezy on activation</li>
+      <li><code>licenseValidatedAt</code> — timestamp of last successful license validation</li>
+      <li><code>pendingExportData</code> — temporarily held table data if a download was blocked by the daily limit (cleared immediately after use)</li>
+    </ul>
+    <p>You can clear all of this data at any time by removing the extension from Chrome.</p>
+  </section>
+
+  <section>
+    <h2>Third-Party Services</h2>
+    <p><strong>LemonSqueezy (license validation only):</strong> If you activate a Pro license, your license key is sent to the <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">LemonSqueezy</a> API for validation. Only the license key and a static instance name ("SnapCSV") are included in this request. LemonSqueezy's own privacy policy governs how they handle this data. No browsing data, page content, or personal information is included.</p>
+    <p>No other third-party services, SDKs, or analytics tools are used by SnapCSV.</p>
+  </section>
+
+  <section>
+    <h2>Permissions Used</h2>
+    <p>SnapCSV requests the following Chrome permissions:</p>
+    <ul>
+      <li><strong>activeTab:</strong> Read the current tab's content when you click the extension icon. Only used on demand — not in the background.</li>
+      <li><strong>scripting:</strong> Inject a table-scanning script into the current tab when you open the popup. Required to detect and read HTML tables.</li>
+      <li><strong>storage:</strong> Save the export counter and license key locally on your device.</li>
+      <li><strong>downloads:</strong> Trigger the CSV file download when you click "Export CSV".</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Children's Privacy</h2>
+    <p>SnapCSV is not directed at children under the age of 13 and does not knowingly collect any information from children.</p>
+  </section>
+
+  <section>
+    <h2>Changes to This Policy</h2>
+    <p>If this privacy policy is updated, the "Last updated" date at the top of this page will be changed. Significant changes will also be noted in the extension's Chrome Web Store listing.</p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p>If you have questions about this privacy policy or how SnapCSV handles data, please open an issue on the <a href="https://github.com/NicoRacks/snapcsv" target="_blank" rel="noopener">GitHub repository</a> or contact us at the email listed in the Chrome Web Store listing.</p>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2026 Blank Canvas Ventures LLC. All rights reserved.
+</footer>
+
+</body>
+</html>
