@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ardenvale Group — Operations Intelligence Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --page-bg:        #f4f6f9;
+      --surface:        #ffffff;
+      --surface-alt:    #f9fafb;
+      --border:         #e2e8f0;
+      --text-primary:   #1e293b;
+      --text-secondary: #64748b;
+      --text-muted:     #94a3b8;
+      --accent-blue:    #3b82f6;
+      --accent-green:   #16a34a;
+      --accent-amber:   #d97706;
+      --accent-red:     #dc2626;
+      --header-bg:      #1e293b;
+      --header-text:    #f1f5f9;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-primary);
+      background: var(--page-bg);
+    }
+
+    /* ── Top Nav ─────────────────────────────────────────── */
+
+    .top-nav {
+      background: var(--header-bg);
+      color: var(--header-text);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: #3b82f6;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -1px;
+    }
+
+    .logo-name {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+      color: white;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 18px;
+      background: #334155;
+      margin: 0 4px;
+    }
+
+    .logo-client {
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .nav-link {
+      font-size: 13px;
+      color: #94a3b8;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .nav-link:hover { color: #e2e8f0; background: #2d3f55; }
+    .nav-link.active { color: #ffffff; background: #2d3f55; }
+
+    .nav-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .nav-date { font-size: 12px; color: #64748b; }
+
+    .nav-badge {
+      font-size: 11px;
+      font-weight: 600;
+      background: #1d4ed8;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #3b4f6b;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #e2e8f0;
+      border: 1.5px solid #475569;
+    }
+
+    /* ── Page Wrapper ─────────────────────────────────────── */
+
+    .page-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+    }
+
+    /* ── Page Header ──────────────────────────────────────── */
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb span { color: #cbd5e1; }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.4px;
+    }
+
+    .page-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      background: white;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* ── Stat Cards ───────────────────────────────────────── */
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 8px 0 4px;
+      letter-spacing: -0.5px;
+    }
+
+    .stat-delta {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .positive { color: var(--accent-green); }
+    .negative { color: var(--accent-red); }
+    .neutral  { color: var(--text-muted); }
+
+    /* ── Data Cards & Tables ──────────────────────────────── */
+
+    .data-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px 13px;
+      border-bottom: 1px solid var(--border);
+      background: #fafbfc;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .section-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-tag {
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .data-table thead th {
+      background: #f8fafc;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 10px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .data-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table tbody tr:last-child { border-bottom: none; }
+    .data-table tbody tr:nth-child(even) td { background: var(--surface-alt); }
+    .data-table tbody tr:hover td { background: #eff6ff; }
+
+    .data-table td {
+      padding: 11px 16px;
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    .data-table td.num,
+    .data-table th.num { text-align: right; }
+
+    .data-table td.muted { color: var(--text-secondary); font-size: 12px; }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-green  { background: #dcfce7; color: #15803d; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-amber  { background: #fef3c7; color: #b45309; }
+    .badge-slate  { background: #f1f5f9; color: #475569; }
+    .badge-red    { background: #fee2e2; color: #b91c1c; }
+
+    /* Two-column layout for bottom tables */
+    .table-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .table-row .data-card { margin-bottom: 0; }
+
+  </style>
+</head>
+<body>
+
+<!-- ── Top Navigation ─────────────────────────────────────── -->
+<header class="top-nav">
+  <a class="nav-logo" href="#">
+    <div class="logo-mark">AG</div>
+    <span class="logo-name">Ardenvale</span>
+    <div class="logo-divider"></div>
+    <span class="logo-client">Operations Portal</span>
+  </a>
+
+  <nav class="nav-links">
+    <a class="nav-link active" href="#">Reports</a>
+    <a class="nav-link" href="#">Projects</a>
+    <a class="nav-link" href="#">Vendors</a>
+    <a class="nav-link" href="#">Personnel</a>
+    <a class="nav-link" href="#">Settings</a>
+  </nav>
+
+  <div class="nav-meta">
+    <span class="nav-date">Q1 2026 · April 14</span>
+    <span class="nav-badge">Q1 Active</span>
+    <div class="avatar">JM</div>
+  </div>
+</header>
+
+<!-- ── Page Content ───────────────────────────────────────── -->
+<div class="page-wrapper">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <p class="breadcrumb">Reports <span>›</span> Operations</p>
+      <h1 class="page-title">Q1 Operations Summary</h1>
+      <p class="page-subtitle">Consolidated reporting across projects, vendors, personnel, and regional performance — Q1 2026</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-secondary">Filter</button>
+      <button class="btn-secondary">Schedule</button>
+      <button class="btn-primary">+ New Report</button>
+    </div>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <p class="stat-label">Active Projects</p>
+      <p class="stat-value">24</p>
+      <p class="stat-delta positive">↑ 4 added this quarter</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Total Budget Allocated</p>
+      <p class="stat-value">$441,900</p>
+      <p class="stat-delta positive">↑ 8.1% vs last quarter</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Avg. Vendor On-Time Rate</p>
+      <p class="stat-value">90.1%</p>
+      <p class="stat-delta negative">↓ 2.3 pts vs last quarter</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Regional Satisfaction Avg.</p>
+      <p class="stat-value">8.3 / 10</p>
+      <p class="stat-delta neutral">→ Stable vs last quarter</p>
+    </div>
+  </div>
+
+  <!-- Table 1 — Project Pipeline -->
+  <div class="data-card">
+    <div class="section-heading">
+      <span class="section-title">Project Pipeline — Q1 2026</span>
+      <div class="section-meta">
+        <span>6 projects</span>
+        <span class="section-tag">Live Data</span>
+      </div>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Project ID</th>
+          <th>Project Name</th>
+          <th>Lead Analyst</th>
+          <th>Status</th>
+          <th class="num">Budget (USD)</th>
+          <th class="num">Completion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="muted">PRJ-1041</td>
+          <td>Crestline Workflow Audit</td>
+          <td>M. Okafor</td>
+          <td><span class="badge badge-blue">In Progress</span></td>
+          <td class="num">$84,500</td>
+          <td class="num">67%</td>
+        </tr>
+        <tr>
+          <td class="muted">PRJ-1055</td>
+          <td>Durnwall Capacity Study</td>
+          <td>S. Petranescu</td>
+          <td><span class="badge badge-amber">Review</span></td>
+          <td class="num">$120,000</td>
+          <td class="num">91%</td>
+        </tr>
+        <tr>
+          <td class="muted">PRJ-1062</td>
+          <td>Halford Distribution Map</td>
+          <td>T. Winsborough</td>
+          <td><span class="badge badge-slate">On Hold</span></td>
+          <td class="num">$47,200</td>
+          <td class="num">34%</td>
+        </tr>
+        <tr>
+          <td class="muted">PRJ-1078</td>
+          <td>Veltrane Procurement Review</td>
+          <td>M. Okafor</td>
+          <td><span class="badge badge-blue">In Progress</span></td>
+          <td class="num">$63,800</td>
+          <td class="num">52%</td>
+        </tr>
+        <tr>
+          <td class="muted">PRJ-1083</td>
+          <td>Ashbrook Site Feasibility</td>
+          <td>D. Lim</td>
+          <td><span class="badge badge-green">Complete</span></td>
+          <td class="num">$31,000</td>
+          <td class="num">100%</td>
+        </tr>
+        <tr>
+          <td class="muted">PRJ-1091</td>
+          <td>Kenmore Logistics Baseline</td>
+          <td>S. Petranescu</td>
+          <td><span class="badge badge-slate">Planning</span></td>
+          <td class="num">$95,400</td>
+          <td class="num">12%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Table 2 — Vendor Performance -->
+  <div class="data-card">
+    <div class="section-heading">
+      <span class="section-title">Vendor Performance Summary — March 2026</span>
+      <div class="section-meta">
+        <span>5 vendors</span>
+        <span class="section-tag">Monthly Refresh</span>
+      </div>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Vendor ID</th>
+          <th>Vendor Name</th>
+          <th>Category</th>
+          <th class="num">On-Time Delivery</th>
+          <th class="num">Defect Rate</th>
+          <th>Contract Renewal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="muted">VND-204</td>
+          <td>Toreval Supplies Ltd.</td>
+          <td>Raw Materials</td>
+          <td class="num">94.2%</td>
+          <td class="num">1.1%</td>
+          <td>Aug 2026</td>
+        </tr>
+        <tr>
+          <td class="muted">VND-217</td>
+          <td>Brindlecroft Co.</td>
+          <td>Packaging</td>
+          <td class="num">88.7%</td>
+          <td class="num">3.4%</td>
+          <td>Nov 2026</td>
+        </tr>
+        <tr>
+          <td class="muted">VND-231</td>
+          <td>Halloway Freight Partners</td>
+          <td>Logistics</td>
+          <td class="num">97.1%</td>
+          <td class="num">0.3%</td>
+          <td>Jan 2027</td>
+        </tr>
+        <tr>
+          <td class="muted">VND-245</td>
+          <td>Quelford Industrial</td>
+          <td>Equipment</td>
+          <td class="num">79.4%</td>
+          <td class="num"><span class="badge badge-red">6.8%</span></td>
+          <td>May 2026</td>
+        </tr>
+        <tr>
+          <td class="muted">VND-258</td>
+          <td>Marnfield Services Group</td>
+          <td>Facilities</td>
+          <td class="num">91.0%</td>
+          <td class="num">2.2%</td>
+          <td>Sep 2026</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tables 3 & 4 — Side by side -->
+  <div class="table-row">
+
+    <!-- Table 3 — Regional Performance -->
+    <div class="data-card">
+      <div class="section-heading">
+        <span class="section-title">Regional Performance Index — Q1 2026</span>
+        <div class="section-meta">
+          <span>5 regions</span>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Office</th>
+            <th class="num">Active Cases</th>
+            <th class="num">Avg. Resolution (days)</th>
+            <th class="num">Satisfaction</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Northern</td>
+            <td>Caldervane</td>
+            <td class="num">142</td>
+            <td class="num">4.3</td>
+            <td class="num"><span class="badge badge-green">8.7 / 10</span></td>
+          </tr>
+          <tr>
+            <td>Southern</td>
+            <td>Porthmere</td>
+            <td class="num">98</td>
+            <td class="num">6.1</td>
+            <td class="num"><span class="badge badge-amber">7.9 / 10</span></td>
+          </tr>
+          <tr>
+            <td>Eastern</td>
+            <td>Stourfield</td>
+            <td class="num">211</td>
+            <td class="num">3.8</td>
+            <td class="num"><span class="badge badge-green">9.1 / 10</span></td>
+          </tr>
+          <tr>
+            <td>Western</td>
+            <td>Dunrath</td>
+            <td class="num">76</td>
+            <td class="num">7.4</td>
+            <td class="num"><span class="badge badge-amber">7.4 / 10</span></td>
+          </tr>
+          <tr>
+            <td>Central</td>
+            <td>Arwick</td>
+            <td class="num">189</td>
+            <td class="num">4.9</td>
+            <td class="num"><span class="badge badge-green">8.3 / 10</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table 4 — Staff Directory (intentionally headerless — triggers amber notice) -->
+    <div class="data-card">
+      <div class="section-heading">
+        <span class="section-title">Staff Directory — Field Operations</span>
+        <div class="section-meta">
+          <span>6 personnel</span>
+        </div>
+      </div>
+      <table class="data-table">
+        <!-- No <thead> or <th> — intentionally headerless to trigger SnapCSV amber notice -->
+        <tbody>
+          <tr>
+            <td class="muted">EMP-3301</td>
+            <td>Celia Marchbanks</td>
+            <td>Field Coordinator</td>
+            <td>Caldervane</td>
+            <td class="muted">ext. 2214</td>
+          </tr>
+          <tr>
+            <td class="muted">EMP-3318</td>
+            <td>Rupert Gainsford</td>
+            <td>Site Inspector</td>
+            <td>Porthmere</td>
+            <td class="muted">ext. 2301</td>
+          </tr>
+          <tr>
+            <td class="muted">EMP-3327</td>
+            <td>Yolanda Ferwick</td>
+            <td>Operations Analyst</td>
+            <td>Stourfield</td>
+            <td class="muted">ext. 2089</td>
+          </tr>
+          <tr>
+            <td class="muted">EMP-3344</td>
+            <td>Brendan Saltwell</td>
+            <td>Logistics Officer</td>
+            <td>Dunrath</td>
+            <td class="muted">ext. 2417</td>
+          </tr>
+          <tr>
+            <td class="muted">EMP-3356</td>
+            <td>Priya Varandan</td>
+            <td>Field Coordinator</td>
+            <td>Arwick</td>
+            <td class="muted">ext. 2553</td>
+          </tr>
+          <tr>
+            <td class="muted">EMP-3371</td>
+            <td>Tom Elveridge</td>
+            <td>Senior Inspector</td>
+            <td>Caldervane</td>
+            <td class="muted">ext. 2198</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <!-- end .table-row -->
+
+</div>
+<!-- end .page-wrapper -->
+
+</body>
+</html>
