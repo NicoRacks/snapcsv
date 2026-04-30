@@ -1,58 +1,32 @@
 /* SnapCSV — popup.css */
 
+@import url('../design-system/colors_and_type.css');
+
+/* ─── Focus Styles ──────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.license-input:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-muted);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-:root {
-  /* Base — Deep Ocean */
-  --color-bg:                #090d12;
-  --color-surface:           #0c1824;
-  --color-surface-raised:    #132535;
-  --color-border:            #142030;
-
-  /* Text */
-  --color-text:              #d8eaf0;
-  --color-text-muted:        #4a7a90;
-  --color-text-disabled:     #2a4a5a;
-
-  /* Accent — Aqua Teal */
-  --color-accent:            #0ea5b8;
-  --color-accent-hover:      #12bcd0;
-  --color-accent-muted:      #082030;
-  --color-accent-text:       #ffffff;
-
-  /* Upgrade — Green (go register) */
-  --color-upgrade:           #1adb72;
-  --color-upgrade-bg:        #0a1a08;
-  --color-upgrade-border:    #1a3a15;
-  --color-upgrade-muted:     #2a5a38;
-
-  /* Success — Green */
-  --color-success:           #22c55e;
-  --color-success-bg:        #071a0a;
-  --color-success-border:    #0f3015;
-
-  /* Error */
-  --color-error:             #ef4444;
-  --color-error-bg:          #1f0808;
-
-  /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-}
-
 body {
   width: 360px;
   min-height: 120px;
   max-height: 500px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 13px;
   background: var(--color-bg);
   color: var(--color-text);
@@ -370,7 +344,7 @@ body {
 }
 
 .btn-primary:active {
-  background: #0a96aa;
+  background: var(--color-accent-active);
 }
 
 .btn-primary:disabled {
@@ -496,7 +470,7 @@ body {
   border-radius: 6px;
   color: var(--color-text);
   font-size: 12px;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   padding: 8px 10px;
   outline: none;
   transition: border-color 0.12s;
@@ -574,7 +548,7 @@ body {
 .success-filename {
   font-size: 11px;
   color: var(--color-text-muted);
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   word-break: break-all;
 }
 
@@ -602,4 +576,13 @@ body {
 
 .nudge-link:hover {
   color: var(--color-upgrade);
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    opacity: 0.5;
+  }
 }

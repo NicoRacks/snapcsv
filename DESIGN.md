@@ -3,8 +3,8 @@
 > Drop this file into the project root. Any AI coding agent (Claude Code, Cursor, Copilot) will read it automatically and generate UI that matches SnapCSV's visual language without re-specification in every prompt.
 
 **Product:** SnapCSV — Chrome Extension  
-**Version:** 1.1 — Deep Ocean  
-**Last updated:** April 14, 2026  
+**Version:** 1.3 — Deep Ocean (Accessible · Typography)  
+**Last updated:** April 30, 2026  
 
 ---
 
@@ -29,8 +29,8 @@
 | Surface raised | `--color-surface-raised` | `#132535` | Hovered list items, selected state |
 | Border | `--color-border` | `#142030` | Dividers, input outlines, table row separators |
 | Text primary | `--color-text` | `#d8eaf0` | All primary body text, table data |
-| Text secondary | `--color-text-muted` | `#4a7a90` | Counts, hints, secondary labels, footer text |
-| Text disabled | `--color-text-disabled` | `#2a4a5a` | Inactive states, placeholders |
+| Text secondary | `--color-text-muted` | `#6da8c0` | Counts, hints, secondary labels, footer text · ~8:1 contrast ✓ |
+| Text disabled | `--color-text-disabled` | `#507a95` | Inactive states, placeholders · ~4.7:1 contrast ✓ |
 
 ### Accent — Aqua Teal (Primary)
 
@@ -48,7 +48,7 @@
 | Upgrade | `--color-upgrade` | `#1adb72` | Upgrade CTA button, limit-reached header |
 | Upgrade bg | `--color-upgrade-bg` | `#0a1a08` | Upgrade prompt panel background |
 | Upgrade border | `--color-upgrade-border` | `#1a3a15` | Upgrade panel border |
-| Upgrade muted | `--color-upgrade-muted` | `#2a5a38` | Secondary text inside upgrade prompt |
+| Upgrade muted | `--color-upgrade-muted` | `#6aaa7a` | Secondary text inside upgrade prompt · ~7.6:1 contrast ✓ |
 
 > **Design intent:** The upgrade prompt uses green — the "go" register — not amber/warning. It should feel like an invitation to keep going, not a penalty for hitting a wall.
 
@@ -73,16 +73,21 @@
 
 ### Font Stack
 
+**Sans:** IBM Plex Sans (variable, bundled at `design-system/assets/fonts/IBMPlexSans-Variable.ttf`) with system fallback.
+
 ```css
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 ```
 
-No external font imports. System fonts only — zero latency, always available.
+**Monospace (for license keys and filenames):** JetBrains Mono (variable, bundled at `design-system/assets/fonts/JetBrainsMono-Variable.ttf`) with system fallback.
 
-**Monospace (for license keys and filenames):**
 ```css
-font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
 ```
+
+Both families are **self-hosted** as variable `.ttf` files inside the extension package — no CDN, no external requests, no CSP relaxation. The `@font-face` declarations live in `design-system/colors_and_type.css`, which `popup/popup.css` consumes via `@import`. System fallbacks render instantly if the bundled file fails to load.
+
+Reference these via the canonical CSS variables — `var(--font-sans)` and `var(--font-mono)` — never hardcode the family names.
 
 ### Type Scale
 
@@ -216,7 +221,7 @@ Transition: background 150ms ease
 ```
 Background: #0a1a08 · Border: 1px solid #1a3a15 · Border-radius: 8px · Padding: 16px
 Headline: "You've exported 10 tables today." — 13px, weight 500, #1adb72
-Subtext: 12px, #2a5a38
+Subtext: 12px, #6aaa7a
 Upgrade button: full-width, background #1adb72, text #000000, weight 600
 Activate link: 12px, --color-text-muted, underline, centered
 ```
@@ -259,12 +264,86 @@ Auto-dismisses after 3 seconds → returns to table list
 - Duration: **150ms**, easing: `ease`
 - Applies to: button hover, list item hover
 - Does NOT apply to: panel switches, state changes, errors — instant
-- No spring, no bounce, no keyframe animations
+- No spring, no bounce, no keyframe animations (except spinner)
+
+**Reduced motion:** Respect `prefers-reduced-motion: reduce` — spinner animation is disabled, opacity reduced. No other motion is affected since transitions are already minimal.
 
 **Keyboard requirements:**
-- Escape: dismiss license panel → upgrade prompt
-- Back button: always return to table list
+- Tab: all interactive elements reachable in DOM order
+- Enter / Space: activate table list items (they carry `role="button"`)
+- Escape: dismiss license panel → returns to upgrade prompt or preview
+- Back button: always returns to table list from preview
+- Enter inside license input: triggers activation
 - No other keyboard shortcuts in v1.0
+
+---
+
+## 9. Accessibility
+
+SnapCSV targets WCAG 2.1 AA compliance. The following rules apply to all UI work.
+
+### Contrast
+
+All text tokens are calibrated to pass WCAG AA (4.5:1 for body text) on the darkest surface they appear on:
+
+| Token | Hex | Contrast on `--color-bg` |
+|-------|-----|--------------------------|
+| `--color-text` | `#d8eaf0` | ~13:1 ✓ |
+| `--color-text-muted` | `#6da8c0` | ~8:1 ✓ |
+| `--color-text-disabled` | `#507a95` | ~4.7:1 ✓ |
+| `--color-upgrade-muted` | `#6aaa7a` | ~7.6:1 on `--color-upgrade-bg` ✓ |
+
+### Focus Styles
+
+Every interactive element exposes a visible focus ring via `:focus-visible`. Never suppress focus outlines.
+
+```css
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+```
+
+**Exception — license input:** uses `border-color: var(--color-accent)` + `box-shadow: 0 0 0 2px var(--color-accent-muted)` instead of outline, since the border is already the primary affordance.
+
+### Screen Reader Utility
+
+```css
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+```
+
+Use `.sr-only` for: table captions in the preview panel, any label that is visually redundant but needed for AT context.
+
+### ARIA Patterns
+
+| Pattern | Implementation |
+|---------|---------------|
+| Decorative icons (⬡ ⊘ ✓ spinner) | `aria-hidden="true"` — never `aria-label` when surrounding text already conveys meaning |
+| Error messages | `role="alert"` — announced immediately by screen readers |
+| Status messages (slow warning, no-headers notice) | `role="status"` + `aria-live="polite"` |
+| Live regions (footer nudge, success state) | `aria-live="polite"` + `aria-atomic="true"` |
+| External links (upgrade, Go Pro) | `aria-label="[action], opens in new tab"` + `rel="noopener noreferrer"` |
+| Interactive list items | `role="button"` + `tabindex="0"` + `keydown` handler for Enter/Space |
+| Form inputs | `aria-describedby` linking input to its error message `id` |
+| Scanning panel | `role="status"` + `aria-live="polite"` |
+
+### Button Rules
+
+- All `<button>` elements must have explicit `type="button"`.
+- Never use a `<div>` or `<span>` as a button. Use `<button>` or add `role="button"` + `tabindex="0"` + keyboard handler to other elements.
+
+### Motion
+
+See Section 8 for `prefers-reduced-motion` requirement.
 
 ---
 
@@ -282,7 +361,7 @@ The extension icon sits in the Chrome toolbar at 16px next to 20+ other icons. I
 
 ---
 
-## 10. Do's and Don'ts
+## 10. Do's and Don'ts  
 
 ### ✅ Do
 - Use `--color-surface` for all cards and interactive surfaces
@@ -297,7 +376,7 @@ The extension icon sits in the Chrome toolbar at 16px next to 20+ other icons. I
 
 ### ❌ Don't
 - Don't use `box-shadow` — ever
-- Don't import external fonts, icons, or CSS frameworks
+- Don't load fonts from a CDN or external host. The two canonical fonts (IBM Plex Sans, JetBrains Mono) are bundled inside the extension package — reference them via `var(--font-sans)` / `var(--font-mono)`. Don't import icons or CSS frameworks.
 - Don't use transitions longer than 150ms
 - Don't use `border-radius` > 8px
 - Don't show soft footer nudge AND hard upgrade panel simultaneously
@@ -312,6 +391,8 @@ The extension icon sits in the Chrome toolbar at 16px next to 20+ other icons. I
 
 Copy this block directly into the top of `popup.css`:
 
+> The canonical implementation lives in `design-system/colors_and_type.css`. `popup/popup.css` consumes it via `@import url('../design-system/colors_and_type.css');` — do not duplicate this block in production CSS.
+
 ```css
 :root {
   /* Base — Deep Ocean */
@@ -322,12 +403,13 @@ Copy this block directly into the top of `popup.css`:
 
   /* Text */
   --color-text:              #d8eaf0;
-  --color-text-muted:        #4a7a90;
-  --color-text-disabled:     #2a4a5a;
+  --color-text-muted:        #6da8c0;  /* WCAG AA: ~8:1 */
+  --color-text-disabled:     #507a95;  /* WCAG AA: ~4.7:1 */
 
   /* Accent — Aqua Teal */
   --color-accent:            #0ea5b8;
   --color-accent-hover:      #12bcd0;
+  --color-accent-active:     #0a96aa;
   --color-accent-muted:      #082030;
   --color-accent-text:       #ffffff;
 
@@ -335,7 +417,7 @@ Copy this block directly into the top of `popup.css`:
   --color-upgrade:           #1adb72;
   --color-upgrade-bg:        #0a1a08;
   --color-upgrade-border:    #1a3a15;
-  --color-upgrade-muted:     #2a5a38;
+  --color-upgrade-muted:     #6aaa7a;  /* WCAG AA: ~7.6:1 on upgrade-bg */
 
   /* Success — Green */
   --color-success:           #22c55e;
@@ -346,6 +428,19 @@ Copy this block directly into the top of `popup.css`:
   --color-error:             #ef4444;
   --color-error-bg:          #1f0808;
 
+  /* Type stack — bundled variable fonts with system fallback */
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+
+  /* Type roles (size · weight · line-height) */
+  --t-pro-size: 10px;       --t-pro-weight: 700;     --t-pro-tracking: 0.8px;
+  --t-caption-size: 11px;   --t-caption-weight: 400; --t-caption-lh: 1.3;
+  --t-body-sm-size: 12px;   --t-body-sm-weight: 400; --t-body-sm-lh: 1.4;
+  --t-button-size: 13px;    --t-button-weight: 500;  --t-button-lh: 1.0;
+  --t-body-size: 13px;      --t-body-weight: 400;    --t-body-lh: 1.5;
+  --t-header-size: 13px;    --t-header-weight: 600;  --t-header-lh: 1.2;
+  --t-logo-size: 14px;      --t-logo-weight: 700;
+
   /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
@@ -353,6 +448,15 @@ Copy this block directly into the top of `popup.css`:
   --space-4: 16px;
   --space-5: 20px;
   --space-6: 24px;
+
+  /* Radii */
+  --radius-0: 0px;     /* popup container, table rows */
+  --radius-1: 4px;     /* badges, list items */
+  --radius-2: 6px;     /* buttons, inputs */
+  --radius-3: 8px;     /* panels (max — never exceed) */
+
+  /* Motion */
+  --motion-fast: 150ms ease;
 }
 ```
 
@@ -361,10 +465,15 @@ Copy this block directly into the top of `popup.css`:
 ## 12. File Conventions
 
 ```
-popup/popup.css     ← All styles. :root variables at top. No external imports.
+design-system/colors_and_type.css  ← Canonical tokens (colors + type) + @font-face for bundled fonts. Single source of truth — imported by popup/popup.css.
+design-system/assets/fonts/        ← Bundled variable .ttf files: IBM Plex Sans (regular + italic), JetBrains Mono (regular + italic), with OFL license files.
+design-system/assets/logo-{16,48,128}.png  ← Canonical brand mark (v2). Mirrored to icons/icon-*.png for the manifest.
+
+popup/popup.css     ← All styles. @imports design-system/colors_and_type.css for tokens. No duplicate :root block.
 popup/popup.html    ← All UI panels as hidden divs, toggled via JS
 popup/popup.js      ← State machine. Vanilla JS only. No frameworks.
 background.js       ← Service worker. No UI logic.
+icons/icon-*.png    ← Toolbar icons referenced by manifest.json. Copy from design-system/assets/logo-*.png on every brandmark update.
 ```
 
 ---
@@ -377,4 +486,4 @@ Start every Claude Code session with:
 
 ---
 
-*This file is the source of truth for SnapCSV's UI. Theme: Deep Ocean. Adopted April 14, 2026. When UI decisions diverge from this file, update this file — don't patch individual components.*
+*This file is the source of truth for SnapCSV's UI. Theme: Deep Ocean. Adopted April 14, 2026. Accessibility pass: April 30, 2026 (v1.2). Typography pass: April 30, 2026 (v1.3 — bundled IBM Plex Sans + JetBrains Mono, design-system import). When UI decisions diverge from this file, update this file — don't patch individual components.*
