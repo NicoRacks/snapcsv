@@ -1,5 +1,7 @@
 // SnapCSV — popup.js
 
+import { sendEvent } from '../analytics.js';
+
 // ─── State ────────────────────────────────────────────────────────────────────
 
 let tables = [];
@@ -53,6 +55,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     window._usageStatus = status;
   });
 
+  sendEvent('page_view', {
+    page_title: document.title,
+    page_location: document.location.href,
+  });
+
   await scanTables();
   setupListeners();
 });
@@ -93,10 +100,12 @@ async function scanTables() {
   tables = results?.[0]?.result ?? [];
 
   if (tables.length === 0) {
+    sendEvent('no_tables_found');
     showEmpty();
     return;
   }
 
+  sendEvent('tables_found', { table_count: tables.length });
   renderTableList();
   showPanel('tableList');
 
@@ -262,7 +271,16 @@ function renderTableList() {
     li.appendChild(info);
     li.appendChild(arrow);
 
+    // Keyboard accessibility — table items act as buttons
+    li.setAttribute('role', 'button');
+    li.setAttribute('tabindex', '0');
     li.addEventListener('click', () => selectTable(table));
+    li.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectTable(table);
+      }
+    });
     list.appendChild(li);
   });
 }
@@ -277,6 +295,13 @@ function showEmpty(msg, sub) {
 
 function selectTable(table) {
   selectedTable = table;
+
+  sendEvent('table_selected', {
+    table_index: table.index,
+    row_count: table.rowCount,
+    col_count: table.colCount,
+    has_headers: table.headers && table.headers.length > 0,
+  });
 
   // Highlight selected item
   document.querySelectorAll('.table-item').forEach(el => el.classList.remove('selected'));
@@ -300,6 +325,12 @@ function renderPreview(table) {
 
   const t = $('preview-table');
   t.innerHTML = '';
+
+  // Accessible caption — announced by screen readers when table receives focus
+  const caption = document.createElement('caption');
+  caption.className = 'sr-only';
+  caption.textContent = `Table ${table.index + 1}: ${table.rowCount} rows, ${table.colCount} columns`;
+  t.appendChild(caption);
 
   const effectiveHeaders = (table.headers && table.headers.length > 0) ? table.headers : null;
 
@@ -357,11 +388,17 @@ async function handleExport(table) {
       if (response.blocked) {
         pendingExportTable = table;
         chrome.storage.local.set({ pendingExportData: JSON.stringify(table) });
+        sendEvent('export_blocked', { export_count: response.exportCount });
+        sendEvent('upgrade_prompt_shown');
         showPanel('upgrade');
         return;
       }
 
       if (response.success) {
+        sendEvent('export_success', {
+          remaining: response.remaining ?? 'unlimited',
+          is_licensed: response.remaining === undefined,
+        });
         showSuccess(response.filename);
         // Update nudge if still on free tier
         if (response.remaining !== undefined && response.remaining <= 3 && response.remaining >= 0) {
@@ -382,6 +419,7 @@ function showExportError(msg) {
   if (!err) {
     err = document.createElement('p');
     err.className = 'license-error export-error';
+    err.setAttribute('role', 'alert'); // announced immediately by screen readers
     exportArea.appendChild(err);
   }
   err.textContent = msg;
@@ -451,9 +489,11 @@ function handleActivate() {
     if (!response || !response.success) {
       errorEl.textContent = response?.error || 'Activation failed. Check your key and try again.';
       errorEl.classList.remove('hidden');
+      sendEvent('license_activation_failed');
       return;
     }
 
+    sendEvent('license_activated');
     // Pro activated!
     showProActivated();
 
@@ -503,6 +543,11 @@ function setupListeners() {
   // Export button
   $('export-btn').addEventListener('click', () => {
     if (selectedTable) handleExport(selectedTable);
+  });
+
+  // Track upgrade link click
+  $('upgrade-link').addEventListener('click', () => {
+    sendEvent('upgrade_clicked');
   });
 
   // Upgrade prompt: show license input

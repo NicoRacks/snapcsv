@@ -1,5 +1,7 @@
 // SnapCSV — background.js (Service Worker)
 
+import { sendEvent } from './analytics.js';
+
 const LEMONSQUEEZY_API = 'https://api.lemonsqueezy.com/v1/licenses';
 const FREE_DAILY_LIMIT = 10;
 
@@ -63,10 +65,16 @@ function todayString() {
 // ─── License Validation ───────────────────────────────────────────────────────
 
 async function validateStoredLicense() {
-  const data = await getStorage(['licenseKey', 'licenseInstanceId']);
-  const { licenseKey, licenseInstanceId } = data;
+  const data = await getStorage(['licenseKey', 'licenseInstanceId', 'licenseValidatedAt']);
+  const { licenseKey, licenseInstanceId, licenseValidatedAt } = data;
 
   if (!licenseKey || !licenseInstanceId) return { valid: false };
+
+  // Cache: skip network call if validated within the last 24 hours
+  if (licenseValidatedAt) {
+    const ageMs = Date.now() - new Date(licenseValidatedAt).getTime();
+    if (ageMs < 24 * 60 * 60 * 1000) return { valid: true, cached: true };
+  }
 
   try {
     const res = await fetch(`${LEMONSQUEEZY_API}/validate`, {
@@ -211,4 +219,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     getUsageStatus().then(sendResponse);
     return true;
   }
+});
+
+// ─── Error Tracking ───────────────────────────────────────────────────────────
+// Catch unhandled promise rejections in the service worker.
+// Stack traces are stripped before sending to avoid leaking personal data.
+
+addEventListener('unhandledrejection', async (event) => {
+  const error = event.reason;
+  await sendEvent('extension_error', {
+    message: error?.message?.substring(0, 100) ?? 'unknown',
+  });
 });

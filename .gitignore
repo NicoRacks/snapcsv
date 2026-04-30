@@ -2,8 +2,11 @@
 _check/
 uploads/
 
-# Redundant root copy of fonts (canonical lives in assets/fonts/)
-fonts/
+# Redundant root copy of fonts (canonical lives in design-system/assets/fonts/)
+/fonts/
+
+# GA4 Measurement Protocol credentials — must never be committed
+ga-config.js
 
 # OS / editor
 .DS_Store

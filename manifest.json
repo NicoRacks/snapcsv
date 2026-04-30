@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "SnapCSV — Table to CSV Exporter",
+  "name": "SnapCSV",
   "short_name": "SnapCSV",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Export any webpage table to CSV in one click. Works on any site. No copy-paste mess.",
   "author": "Blank Canvas Ventures LLC",
   "homepage_url": "https://nicoracks.github.io/snapcsv/",
   "permissions": ["activeTab", "scripting", "storage", "downloads"],
+  "host_permissions": ["https://www.google-analytics.com/"],
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
@@ -21,7 +22,8 @@
     "128": "icons/icon-128.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
