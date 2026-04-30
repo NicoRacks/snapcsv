@@ -4,121 +4,321 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SnapCSV — Privacy Policy</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta name="description" content="Privacy policy for SnapCSV — what we collect, what we don't, and the anonymous Google Analytics events used to improve the extension.">
+  <meta name="theme-color" content="#090d12">
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      font-size: 16px;
-      line-height: 1.7;
-      color: #1a1a2e;
-      background: #f8f8fc;
+  <link rel="icon" type="image/png" sizes="48x48" href="design-system/assets/logo-48.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="design-system/assets/logo-128.png">
+
+  <style>
+    /* Self-hosted variable fonts (same files the extension bundles, exactly as
+       downloaded from Google Fonts). No CDN, no external requests. */
+    @font-face {
+      font-family: 'IBM Plex Sans';
+      src: url('design-system/assets/fonts/IBMPlexSans-VariableFont_wdth,wght.ttf') format('truetype-variations');
+      font-weight: 100 900;
+      font-stretch: 75% 100%;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      src: url('design-system/assets/fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype-variations');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
     }
 
-    header {
-      background: #5b52e0;
-      padding: 32px 24px;
+    :root {
+      /* Deep Ocean tokens — same as design-system/colors_and_type.css */
+      --color-bg:                #090d12;
+      --color-surface:           #0c1824;
+      --color-surface-raised:    #132535;
+      --color-border:            #142030;
+      --color-text:              #d8eaf0;
+      --color-text-muted:        #6da8c0;
+      --color-text-disabled:     #507a95;
+      --color-accent:            #0ea5b8;
+      --color-accent-hover:      #12bcd0;
+      --color-accent-muted:      #082030;
+      --color-upgrade:           #1adb72;
+
+      --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 40px;
+      --space-10: 64px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-text);
+      background: var(--color-bg);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--color-accent);
+      color: var(--color-bg);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* ─── Header ───────────────────────────────────────────────────── */
+
+    .site-header {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-8) var(--space-6) var(--space-6);
       text-align: center;
     }
 
-    header h1 {
-      color: #ffffff;
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
+    .brandmark {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+      text-decoration: none;
     }
 
-    header p {
-      color: rgba(255,255,255,0.75);
-      font-size: 14px;
-      margin-top: 6px;
+    .brandmark img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      flex-shrink: 0;
     }
+
+    .brandmark-text {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      color: var(--color-text);
+    }
+
+    .brandmark-text .csv {
+      color: var(--color-accent);
+    }
+
+    .site-header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      color: var(--color-text);
+      line-height: 1.15;
+      max-width: 640px;
+      margin: 0 auto var(--space-3);
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── Main content ─────────────────────────────────────────────── */
 
     main {
       max-width: 720px;
       margin: 0 auto;
-      padding: 48px 24px 80px;
-    }
-
-    section {
-      margin-bottom: 40px;
-    }
-
-    h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #eeeef8;
-    }
-
-    p {
-      color: #3a3a5a;
-      margin-bottom: 12px;
-    }
-
-    ul {
-      color: #3a3a5a;
-      padding-left: 22px;
-      margin-bottom: 12px;
-    }
-
-    ul li {
-      margin-bottom: 6px;
+      padding: var(--space-10) var(--space-6) var(--space-10);
     }
 
     .highlight-box {
-      background: #f0eefc;
-      border-left: 4px solid #5b52e0;
-      border-radius: 4px;
-      padding: 14px 18px;
-      margin-bottom: 16px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+      padding: var(--space-5) var(--space-6);
+      margin-bottom: var(--space-10);
     }
 
     .highlight-box p {
       margin: 0;
-      color: #2a2a4a;
-      font-weight: 500;
+      color: var(--color-text);
+      font-weight: 400;
+      font-size: 15px;
     }
 
+    section {
+      margin-bottom: var(--space-10);
+      scroll-margin-top: var(--space-6);
+    }
+
+    section:last-of-type { margin-bottom: 0; }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      position: relative;
+    }
+
+    h2::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 32px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+
+    p {
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    p + p { margin-top: var(--space-3); }
+
+    p strong { color: var(--color-text); font-weight: 600; }
+
+    ul {
+      color: var(--color-text);
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: var(--space-4);
+    }
+
+    ul li {
+      position: relative;
+      padding-left: var(--space-5);
+      margin-bottom: var(--space-3);
+    }
+
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 6px;
+      height: 1px;
+      background: var(--color-accent);
+    }
+
+    ul li strong {
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
+    /* ─── Inline code ──────────────────────────────────────────────── */
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.875em;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 1px 6px;
+      border-radius: 4px;
+      letter-spacing: 0;
+    }
+
+    /* In the highlight box, code blends back to the surface */
+    .highlight-box code {
+      background: var(--color-bg);
+    }
+
+    /* ─── Links ────────────────────────────────────────────────────── */
+
     a {
-      color: #5b52e0;
+      color: var(--color-accent);
       text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 150ms ease, border-color 150ms ease;
     }
 
     a:hover {
-      text-decoration: underline;
+      color: var(--color-accent-hover);
+      border-bottom-color: currentColor;
     }
 
+    /* ─── Footer ───────────────────────────────────────────────────── */
+
     footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-6);
       text-align: center;
-      padding: 24px;
-      font-size: 13px;
-      color: #8a8aaa;
-      border-top: 1px solid #eeeef8;
+      font-size: 12px;
+      color: var(--color-text-muted);
+      border-top: 1px solid var(--color-border);
+    }
+
+    footer a {
+      color: var(--color-text-muted);
+    }
+
+    footer a:hover {
+      color: var(--color-text);
+    }
+
+    /* ─── Responsive ───────────────────────────────────────────────── */
+
+    @media (max-width: 600px) {
+      .site-header { padding: var(--space-6) var(--space-4) var(--space-5); }
+      .site-header h1 { font-size: 26px; }
+      main { padding: var(--space-6) var(--space-4) var(--space-8); }
+      h2 { font-size: 19px; }
+      body { font-size: 15px; }
+    }
+
+    /* ─── Reduced motion ───────────────────────────────────────────── */
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>SnapCSV — Privacy Policy</h1>
-  <p>Last updated: April 14, 2026</p>
+<header class="site-header">
+  <a class="brandmark" href="https://github.com/NicoRacks/snapcsv" aria-label="SnapCSV — view on GitHub">
+    <img src="design-system/assets/logo-128.png" alt="" width="40" height="40" />
+    <span class="brandmark-text">Snap<span class="csv">CSV</span></span>
+  </a>
+  <h1>Privacy Policy</h1>
+  <p class="meta">Last updated · April 30, 2026</p>
 </header>
 
 <main>
 
   <div class="highlight-box">
-    <p>SnapCSV does not collect, transmit, or store any personal data on external servers. All data stays on your device.</p>
+    <p>SnapCSV does not collect personally identifiable information. Page content, table data, and CSV exports stay on your device. The extension does send anonymous, aggregate usage events to Google Analytics so we can understand which features are used — see the <a href="#analytics">Analytics</a> section below for the full list.</p>
   </div>
 
-  <section>
+  <section id="overview">
     <h2>Overview</h2>
     <p>SnapCSV is a Chrome extension that lets you export HTML tables from any webpage to a CSV file. This privacy policy explains what data the extension accesses, how it uses that data, and what is never collected.</p>
   </section>
 
-  <section>
+  <section id="data-we-access">
     <h2>Data We Access</h2>
     <p>SnapCSV accesses only the minimum data required to function:</p>
     <ul>
@@ -128,18 +328,18 @@
     </ul>
   </section>
 
-  <section>
+  <section id="data-we-do-not-collect">
     <h2>Data We Do Not Collect</h2>
     <ul>
       <li>We do not collect names, email addresses, or any personally identifiable information.</li>
-      <li>We do not track which websites you visit or which tables you export.</li>
-      <li>We do not use analytics, telemetry, or crash reporting services.</li>
+      <li>We do not track which specific websites you visit or capture URLs of pages you scan.</li>
       <li>We do not store any page content, table data, or CSV contents on any server.</li>
-      <li>We do not sell, share, or transfer any data to third parties.</li>
+      <li>We do not use the data we collect for advertising, audience segmentation, or remarketing.</li>
+      <li>We do not sell, share, or transfer any data to third parties beyond what is described under "Third-Party Services" below.</li>
     </ul>
   </section>
 
-  <section>
+  <section id="local-storage">
     <h2>Local Storage</h2>
     <p>The following data is stored locally on your device using <code>chrome.storage.local</code> and never leaves your browser:</p>
     <ul>
@@ -149,38 +349,68 @@
       <li><code>licenseInstanceId</code> — the instance ID returned by LemonSqueezy on activation</li>
       <li><code>licenseValidatedAt</code> — timestamp of last successful license validation</li>
       <li><code>pendingExportData</code> — temporarily held table data if a download was blocked by the daily limit (cleared immediately after use)</li>
+      <li><code>clientId</code> — a randomly-generated identifier (10 random digits + a Unix timestamp) created on first install and used to distinguish unique extension installs in our anonymous analytics. Not linked to any account, email, or device fingerprint.</li>
     </ul>
     <p>You can clear all of this data at any time by removing the extension from Chrome.</p>
   </section>
 
-  <section>
-    <h2>Third-Party Services</h2>
-    <p><strong>LemonSqueezy (license validation only):</strong> If you activate a Pro license, your license key is sent to the <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">LemonSqueezy</a> API for validation. Only the license key and a static instance name ("SnapCSV") are included in this request. LemonSqueezy's own privacy policy governs how they handle this data. No browsing data, page content, or personal information is included.</p>
-    <p>No other third-party services, SDKs, or analytics tools are used by SnapCSV.</p>
+  <section id="analytics">
+    <h2>Analytics</h2>
+    <p>SnapCSV uses <strong>Google Analytics 4 (GA4)</strong> via the Measurement Protocol to understand how the extension is used in aggregate — which features are popular, where errors happen, and how often free users convert to Pro. We collect anonymous event data only; no page content, no table data, no CSV contents, and no personally identifiable information are sent.</p>
+
+    <p><strong>Events we collect:</strong></p>
+    <ul>
+      <li><code>page_view</code> — popup opened</li>
+      <li><code>tables_found</code> — number of tables detected on the current page (count only)</li>
+      <li><code>no_tables_found</code> — popup opened but no tables detected</li>
+      <li><code>table_selected</code> — a table was selected for preview (row count, column count, header presence — no cell content)</li>
+      <li><code>export_success</code> — a CSV was successfully exported (count of remaining free exports, license status)</li>
+      <li><code>export_blocked</code> — daily free-tier limit reached</li>
+      <li><code>upgrade_prompt_shown</code> — upgrade panel appeared</li>
+      <li><code>upgrade_clicked</code> — upgrade link clicked</li>
+      <li><code>license_activated</code> — Pro license successfully activated</li>
+      <li><code>license_activation_failed</code> — Pro license activation failed</li>
+      <li><code>extension_error</code> — an unhandled error occurred (error message truncated to 100 characters; stack traces and personal data are stripped before sending)</li>
+    </ul>
+
+    <p>Each event is associated with the anonymous <code>clientId</code> stored locally in your browser (see <a href="#local-storage">Local Storage</a> above). Removing the extension deletes this identifier and ends our ability to recognize your install. Google's processing of data sent via Measurement Protocol is governed by Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+
+    <p>We do not use the analytics data for advertising, audience segmentation, or any purpose beyond product improvement.</p>
   </section>
 
-  <section>
+  <section id="third-party-services">
+    <h2>Third-Party Services</h2>
+    <p><strong>LemonSqueezy (license validation only):</strong> If you activate a Pro license, your license key is sent to the <a href="https://www.lemonsqueezy.com" target="_blank" rel="noopener">LemonSqueezy</a> API for validation. Only the license key and a static instance name ("SnapCSV") are included in this request. LemonSqueezy's own privacy policy governs how they handle this data. No browsing data, page content, or personal information is included.</p>
+    <p><strong>Google Analytics 4 (anonymous usage events):</strong> SnapCSV sends the events listed in the <a href="#analytics">Analytics</a> section to Google's Measurement Protocol endpoint at <code>https://www.google-analytics.com/mp/collect</code>. Each event includes the anonymous <code>clientId</code> generated on first install and the event-specific fields described above. No page content, table data, URLs, or personally identifiable information is included. Google's handling of this data is governed by the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>.</p>
+    <p>No other third-party services or SDKs are used by SnapCSV.</p>
+  </section>
+
+  <section id="permissions-used">
     <h2>Permissions Used</h2>
     <p>SnapCSV requests the following Chrome permissions:</p>
     <ul>
       <li><strong>activeTab:</strong> Read the current tab's content when you click the extension icon. Only used on demand — not in the background.</li>
       <li><strong>scripting:</strong> Inject a table-scanning script into the current tab when you open the popup. Required to detect and read HTML tables.</li>
-      <li><strong>storage:</strong> Save the export counter and license key locally on your device.</li>
+      <li><strong>storage:</strong> Save the export counter, license key, and anonymous analytics client ID locally on your device.</li>
       <li><strong>downloads:</strong> Trigger the CSV file download when you click "Export CSV".</li>
+    </ul>
+    <p>SnapCSV also requests one host permission:</p>
+    <ul>
+      <li><strong><code>https://www.google-analytics.com/</code>:</strong> Required to send anonymous usage events to Google Analytics 4 (see the <a href="#analytics">Analytics</a> section). No other hosts are accessed.</li>
     </ul>
   </section>
 
-  <section>
+  <section id="childrens-privacy">
     <h2>Children's Privacy</h2>
     <p>SnapCSV is not directed at children under the age of 13 and does not knowingly collect any information from children.</p>
   </section>
 
-  <section>
+  <section id="changes">
     <h2>Changes to This Policy</h2>
     <p>If this privacy policy is updated, the "Last updated" date at the top of this page will be changed. Significant changes will also be noted in the extension's Chrome Web Store listing.</p>
   </section>
 
-  <section>
+  <section id="contact">
     <h2>Contact</h2>
     <p>If you have questions about this privacy policy or how SnapCSV handles data, please open an issue on the <a href="https://github.com/NicoRacks/snapcsv" target="_blank" rel="noopener">GitHub repository</a> or contact us at the email listed in the Chrome Web Store listing.</p>
   </section>
@@ -188,7 +418,7 @@
 </main>
 
 <footer>
-  &copy; 2026 Blank Canvas Ventures LLC. All rights reserved.
+  &copy; 2026 <a href="https://github.com/NicoRacks" target="_blank" rel="noopener">Blank Canvas Ventures LLC</a> · All rights reserved
 </footer>
 
 </body>
