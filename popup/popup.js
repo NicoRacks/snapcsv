@@ -119,9 +119,13 @@ async function scanTables() {
 // ─── Injected function (runs in page context) ─────────────────────────────────
 
 function scanTablesOnPage() {
-  const tables = document.querySelectorAll('table');
+  // Skip layout tables (those that contain nested tables). Real data tables
+  // don't nest; without this filter, the outer table absorbs every nested row
+  // and produces garbage output on legacy table-laid-out sites like HN.
+  const tables = Array.from(document.querySelectorAll('table'))
+    .filter(t => !t.querySelector('table'));
 
-  return Array.from(tables).map((table, index) => {
+  return tables.map((table, index) => {
 
     // ── 1. Collect all non-empty rows ──────────────────────────────────────
     const allTrs = Array.from(table.querySelectorAll('tr'))
