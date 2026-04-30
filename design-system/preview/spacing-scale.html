@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+<link rel="stylesheet" href="_card.css">
+<style>
+.spacing-row { display: flex; align-items: center; gap: 14px; padding: 7px 0; border-bottom: 1px solid var(--color-border); }
+.spacing-row:last-child { border-bottom: none; }
+.spacing-token { width: 80px; font-family: var(--font-mono); font-size: 11px; color: var(--color-text); }
+.spacing-val { width: 50px; font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); }
+.spacing-bar { height: 16px; background: var(--color-accent); border-radius: 2px; }
+.spacing-note { font-size: 10px; color: var(--color-text-muted); flex: 1; }
+</style>
+</head><body>
+<div class="card">
+<div class="spacing-row"><div class="spacing-token">--space-1</div><div class="spacing-val">4px</div><div class="spacing-bar" style="width:4px;"></div><div class="spacing-note">Icon gaps · tight inline</div></div>
+<div class="spacing-row"><div class="spacing-token">--space-2</div><div class="spacing-val">8px</div><div class="spacing-bar" style="width:8px;"></div><div class="spacing-note">Label / value pairs</div></div>
+<div class="spacing-row"><div class="spacing-token">--space-3</div><div class="spacing-val">12px</div><div class="spacing-bar" style="width:12px;"></div><div class="spacing-note">Standard row vertical padding</div></div>
+<div class="spacing-row"><div class="spacing-token">--space-4</div><div class="spacing-val">16px</div><div class="spacing-bar" style="width:16px;"></div><div class="spacing-note">Section padding · button padding</div></div>
+<div class="spacing-row"><div class="spacing-token">--space-5</div><div class="spacing-val">20px</div><div class="spacing-bar" style="width:20px;"></div><div class="spacing-note">Major section gaps</div></div>
+<div class="spacing-row"><div class="spacing-token">--space-6</div><div class="spacing-val">24px</div><div class="spacing-bar" style="width:24px;"></div><div class="spacing-note">Header / footer height baseline</div></div>
+</div>
+</body></html>

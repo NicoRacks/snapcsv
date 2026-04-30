@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+<link rel="stylesheet" href="_card.css"><link rel="stylesheet" href="_components.css">
+<style>
+  .hb-row { display: flex; flex-direction: column; gap: 14px; }
+  .hb-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: flex-start; }
+  .hb-col .label-eyebrow { margin-bottom: 8px; }
+  .hb-spec { font-size: 10px; color: var(--color-text-disabled); margin-top: 6px; font-family: var(--font-mono); letter-spacing: 0.3px; }
+  .hb-spec strong { color: var(--color-text-muted); font-weight: 600; }
+  /* Override the shared .sc-header-logo gap for tighter mark+wordmark */
+  .popup-frame .sc-header-logo { gap: 8px; }
+  /* The mark itself — use the native-size 16px asset, rendered crisp */
+  .sc-logo-mark { width: 20px; height: 20px; image-rendering: -webkit-optimize-contrast; flex-shrink: 0; }
+</style>
+</head><body>
+<div class="card hb-row">
+
+  <div class="hb-pair">
+    <div class="hb-col">
+      <div class="label-eyebrow">Default</div>
+      <div class="popup-frame">
+        <div class="sc-header">
+          <div class="sc-header-logo">
+            <img class="sc-logo-mark" src="../assets/logo-128.png?v2-1777549362726" alt="" aria-hidden="true">
+            <span class="sc-logo-text">SnapCSV</span>
+          </div>
+        </div>
+      </div>
+      <div class="hb-spec"><strong>40px</strong> · padding 0 14px · border-bottom 1px #142030</div>
+    </div>
+    <div class="hb-col">
+      <div class="label-eyebrow">Pro activated</div>
+      <div class="popup-frame">
+        <div class="sc-header">
+          <div class="sc-header-logo">
+            <img class="sc-logo-mark" src="../assets/logo-128.png?v2-1777549362726" alt="" aria-hidden="true">
+            <span class="sc-logo-text">SnapCSV</span>
+          </div>
+          <div class="sc-pro-badge">PRO</div>
+        </div>
+      </div>
+      <div class="hb-spec"><strong>PRO badge</strong> · 10/700 · #0ea5b8 bg · #fff text · 4px radius</div>
+    </div>
+  </div>
+
+  <!-- Mark scale comparison -->
+  <div style="border-top: 1px solid var(--color-border); padding-top: 12px; display: flex; align-items: center; gap: 18px;">
+    <div class="label-eyebrow" style="margin: 0;">Mark · header use</div>
+    <div style="display: flex; align-items: center; gap: 24px; flex: 1;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+        <img src="../assets/logo-128.png?v2-1777549362726" width="16" height="16" alt="" style="image-rendering: -webkit-optimize-contrast;">
+        <span class="hb-spec" style="margin: 0;">16px</span>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px; outline: 1px dashed var(--color-accent); outline-offset: 2px; border-radius: 4px;">
+        <img src="../assets/logo-128.png?v2-1777549362726" width="20" height="20" alt="" style="image-rendering: -webkit-optimize-contrast;">
+        <span class="hb-spec" style="margin: 0; color: var(--color-accent);">20px · used here</span>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+        <img src="../assets/logo-128.png?v2-1777549362726" width="24" height="24" alt="" style="image-rendering: -webkit-optimize-contrast;">
+        <span class="hb-spec" style="margin: 0;">24px</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body></html>

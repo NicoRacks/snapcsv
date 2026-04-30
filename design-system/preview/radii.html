@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+<link rel="stylesheet" href="_card.css">
+<style>
+.radii { display: flex; gap: 12px; align-items: flex-end; height: 100%; }
+.r-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.r-shape { width: 80px; height: 60px; background: var(--color-surface-raised); border: 1px solid var(--color-border); }
+.r-token { font-family: var(--font-mono); font-size: 10px; color: var(--color-text); }
+.r-val { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); }
+.r-note { font-size: 10px; color: var(--color-text-muted); text-align: center; line-height: 1.3; }
+</style>
+</head><body>
+<div class="card"><div class="radii">
+<div class="r-item"><div class="r-shape" style="border-radius:0;"></div><div class="r-token">0</div><div class="r-val">0px</div><div class="r-note">Popup container<br>Table rows</div></div>
+<div class="r-item"><div class="r-shape" style="border-radius:4px;"></div><div class="r-token">--radius-1</div><div class="r-val">4px</div><div class="r-note">Badges<br>List items</div></div>
+<div class="r-item"><div class="r-shape" style="border-radius:6px;"></div><div class="r-token">--radius-2</div><div class="r-val">6px</div><div class="r-note">Buttons<br>Inputs</div></div>
+<div class="r-item"><div class="r-shape" style="border-radius:8px;"></div><div class="r-token">--radius-3</div><div class="r-val">8px</div><div class="r-note">Panels<br>(max — never exceed)</div></div>
+</div></div>
+</body></html>

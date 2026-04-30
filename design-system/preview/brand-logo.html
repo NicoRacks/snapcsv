@@ -1,0 +1,107 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+<link rel="stylesheet" href="_card.css"><link rel="stylesheet" href="_components.css">
+<style>
+  .lg-wrap { padding: 16px 18px; }
+  .lg-eyebrow { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.7px; color: var(--color-text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .lg-eyebrow .pill { font-size: 9px; padding: 1px 6px; border-radius: 3px; letter-spacing: 0.5px; }
+  .lg-eyebrow .pill.shipped { background: var(--color-accent-muted); color: var(--color-accent); border: 1px solid var(--color-accent); }
+  .lg-eyebrow .pill.future { background: var(--color-upgrade-bg); color: var(--color-upgrade); border: 1px solid var(--color-upgrade-border); }
+  .ladder { display: flex; align-items: flex-end; gap: 22px; padding: 8px 0; }
+  .ladder figure { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
+  .ladder figcaption { font-size: 9px; font-family: var(--font-mono); color: var(--color-text-disabled); letter-spacing: 0.3px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card-cell { display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-bg); min-height: 96px; }
+  .card-cell .lockup { display: flex; align-items: center; justify-content: center; gap: 12px; flex: 1; padding: 8px 0; }
+  .card-cell .label { font-size: 10px; font-family: var(--font-mono); color: var(--color-text-muted); line-height: 1.5; text-align: left; }
+  .w-base { font-family: var(--font-sans); color: var(--color-text); white-space: nowrap; }
+  .w-a { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; }
+  .w-a .csv { color: var(--color-text-muted); font-weight: 600; }
+  .w-b { font-size: 22px; font-weight: 600; letter-spacing: -0.6px; }
+  .w-c { font-family: var(--font-mono); font-size: 16px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .w-c .accent { color: var(--color-accent); }
+  .w-d { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .w-d .snap { color: var(--color-accent); }
+  .w-e { font-size: 13px; font-weight: 700; letter-spacing: 0.2px; line-height: 1.05; text-transform: uppercase; text-align: left; display: flex; flex-direction: column; }
+  .w-e .csv { color: var(--color-text-muted); font-weight: 600; }
+  .w-f { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+  .w-f .dot { color: var(--color-accent); }
+  .w-f .csv { color: var(--color-text-muted); font-weight: 600; }
+</style>
+</head><body>
+<div class="card lg-wrap">
+
+  <!-- Shipped: v2 mark -->
+  <div class="lg-eyebrow">Brand mark <span class="pill shipped">shipping · v2</span></div>
+  <div class="ladder">
+    <figure><img src="../assets/logo-16.png?v2-1777549362726" width="16" height="16" alt=""><figcaption>16 · toolbar</figcaption></figure>
+    <figure><img src="../assets/logo-48.png?v2-1777549362726" width="48" height="48" alt=""><figcaption>48 · install</figcaption></figure>
+    <figure><img src="../assets/logo-128.png?v2-1777549362726" width="96" height="96" alt=""><figcaption>128 · store</figcaption></figure>
+  </div>
+
+  <!-- Lockup with wordmark -->
+  <div class="lg-eyebrow" style="margin-top: 22px;">Primary lockup</div>
+  <div class="grid" style="margin-bottom: 18px;">
+    <div class="card-cell">
+      <div class="lockup">
+        <img src="../assets/logo-128.png?v2-1777549362726" width="40" height="40" alt="">
+        <span class="w-base w-a">Snap<span class="csv">CSV</span></span>
+      </div>
+      <div class="label">Mark + two-tone wordmark — horizontal lockup</div>
+    </div>
+    <div class="card-cell">
+      <div class="lockup"><img src="../assets/logo-128.png?v2-1777549362726" width="56" height="56" alt=""></div>
+      <div class="label">Mark standalone — square contexts (favicon, app tile)</div>
+    </div>
+  </div>
+
+  <!-- v3 alternate exploration -->
+  <div class="lg-eyebrow">Alternate direction <span class="pill future">exploration · v3</span></div>
+  <div class="grid" style="margin-bottom: 18px;">
+    <div class="card-cell">
+      <div class="lockup"><img src="../assets/logo-v3-128.png?v2-1777549362726" width="56" height="56" alt=""></div>
+      <div class="label">v3 · No chassis — stacked rows + integrated green arrow</div>
+    </div>
+    <div class="card-cell">
+      <div class="lockup">
+        <img src="../assets/logo-v3-128.png?v2-1777549362726" width="40" height="40" alt="">
+        <span class="w-base w-a">Snap<span class="csv">CSV</span></span>
+      </div>
+      <div class="label">v3 mark + wordmark lockup</div>
+    </div>
+  </div>
+
+  <!-- Wordmark explorations -->
+  <div class="lg-eyebrow">Wordmark explorations · standalone</div>
+  <div class="grid">
+    <div class="card-cell">
+      <div class="lockup"><span class="w-base w-a">Snap<span class="csv">CSV</span></span></div>
+      <div class="label">A · Two-tone — bold Snap, muted CSV</div>
+    </div>
+    <div class="card-cell">
+      <div class="lockup"><span class="w-base w-b">snapcsv</span></div>
+      <div class="label">B · All-lowercase, single weight — modern dev-tool register</div>
+    </div>
+    <div class="card-cell">
+      <div class="lockup"><span class="w-base w-c"><span class="accent">SNAP</span>CSV</span></div>
+      <div class="label">C · Mono caps, accent on Snap — reads like a CLI prompt</div>
+    </div>
+    <div class="card-cell">
+      <div class="lockup"><span class="w-base w-d"><span class="snap">Snap</span>CSV</span></div>
+      <div class="label">D · Teal Snap, neutral CSV — accent leads the eye to the action verb</div>
+    </div>
+    <div class="card-cell">
+      <div class="lockup"><span class="w-base w-f">Snap<span class="dot">.</span><span class="csv">CSV</span></span></div>
+      <div class="label">F · Filename-style — dot as file-extension separator</div>
+    </div>
+    <div class="card-cell">
+      <div class="lockup"><span class="w-base w-e"><span>SNAP</span><span class="csv">CSV</span></span></div>
+      <div class="label">E · Stacked uppercase — compact, square-favicon friendly</div>
+    </div>
+  </div>
+
+</div>
+</body></html>

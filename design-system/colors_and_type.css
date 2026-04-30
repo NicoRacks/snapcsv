@@ -1,0 +1,127 @@
+/* SnapCSV Design System — colors + type tokens
+   Theme: Deep Ocean
+   Source of truth for color & typography. Import this file
+   in any prototype to inherit the brand language.
+*/
+
+/* Self-hosted variable fonts — no external requests, no CSP changes.
+   One file per family covers all weights via font-weight: 100 900. */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('./assets/fonts/IBMPlexSans-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('./assets/fonts/IBMPlexSans-Italic-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./assets/fonts/JetBrainsMono-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./assets/fonts/JetBrainsMono-Italic-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ─── Base surfaces ─────────────────────────────── */
+  --color-bg:                #090d12;   /* Layer 0 — popup bg, all panels */
+  --color-surface:           #0c1824;   /* Layer 1 — cards, inputs, table rows */
+  --color-surface-raised:    #132535;   /* Layer 2 — hover + selected */
+  --color-border:            #142030;   /* dividers + outlines */
+
+  /* ─── Text ──────────────────────────────────────── */
+  --color-text:              #d8eaf0;   /* primary — body, table data (~13:1) */
+  --color-text-muted:        #6da8c0;   /* counts, labels, hints (~8:1)  */
+  --color-text-disabled:     #507a95;   /* placeholders, inactive (~4.7:1) */
+
+  /* ─── Accent — Aqua Teal ────────────────────────── */
+  --color-accent:            #0ea5b8;
+  --color-accent-hover:      #12bcd0;
+  --color-accent-active:     #0a96aa;
+  --color-accent-muted:      #082030;
+  --color-accent-text:       #ffffff;
+
+  /* ─── Upgrade — Green (go register) ─────────────── */
+  --color-upgrade:           #1adb72;
+  --color-upgrade-bg:        #0a1a08;
+  --color-upgrade-border:    #1a3a15;
+  --color-upgrade-muted:     #6aaa7a;   /* ~7.6:1 body inside upgrade panel */
+
+  /* ─── Success — Green (export complete) ─────────── */
+  --color-success:           #22c55e;
+  --color-success-bg:        #071a0a;
+  --color-success-border:    #0f3015;
+
+  /* ─── Error — Red ───────────────────────────────── */
+  --color-error:             #ef4444;
+  --color-error-bg:          #1f0808;
+
+  /* ─── Type stack ────────────────────────────────── */
+  /* IBM Plex Sans — engineered humanist; system fallback on slow load.
+     JetBrains Mono — best-in-class for license keys (zero-with-slash, distinct l/I/1). */
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+
+  /* ─── Type roles (size / weight / line-height) ──── */
+  --t-pro-size: 10px;       --t-pro-weight: 700;   --t-pro-tracking: 0.8px;
+  --t-caption-size: 11px;   --t-caption-weight: 400; --t-caption-lh: 1.3;
+  --t-body-sm-size: 12px;   --t-body-sm-weight: 400; --t-body-sm-lh: 1.4;
+  --t-button-size: 13px;    --t-button-weight: 500;  --t-button-lh: 1.0;
+  --t-body-size: 13px;      --t-body-weight: 400;    --t-body-lh: 1.5;
+  --t-header-size: 13px;    --t-header-weight: 600;  --t-header-lh: 1.2;
+  --t-logo-size: 14px;      --t-logo-weight: 700;
+
+  /* ─── Spacing scale ─────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* ─── Radii ─────────────────────────────────────── */
+  --radius-0: 0px;     /* popup container, table rows */
+  --radius-1: 4px;     /* badges, list items */
+  --radius-2: 6px;     /* buttons, inputs */
+  --radius-3: 8px;     /* panels (max) */
+
+  /* ─── Motion ────────────────────────────────────── */
+  --motion-fast: 150ms ease;
+}
+
+/* ─── Semantic role classes (use directly) ───────── */
+
+.t-pro      { font-family: var(--font-sans); font-size: var(--t-pro-size); font-weight: var(--t-pro-weight); letter-spacing: var(--t-pro-tracking); text-transform: uppercase; line-height: 1; }
+.t-caption  { font-family: var(--font-sans); font-size: var(--t-caption-size); font-weight: var(--t-caption-weight); line-height: var(--t-caption-lh); }
+.t-body-sm  { font-family: var(--font-sans); font-size: var(--t-body-sm-size); font-weight: var(--t-body-sm-weight); line-height: var(--t-body-sm-lh); }
+.t-button   { font-family: var(--font-sans); font-size: var(--t-button-size); font-weight: var(--t-button-weight); line-height: var(--t-button-lh); }
+.t-body     { font-family: var(--font-sans); font-size: var(--t-body-size); font-weight: var(--t-body-weight); line-height: var(--t-body-lh); }
+.t-header   { font-family: var(--font-sans); font-size: var(--t-header-size); font-weight: var(--t-header-weight); line-height: var(--t-header-lh); }
+.t-logo     { font-family: var(--font-sans); font-size: var(--t-logo-size); font-weight: var(--t-logo-weight); }
+.t-mono     { font-family: var(--font-mono); font-size: 12px; font-weight: 400; line-height: 1.4; }
+
+/* ─── A11y helper ────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

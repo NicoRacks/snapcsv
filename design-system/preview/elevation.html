@@ -1,0 +1,39 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+<link rel="stylesheet" href="_card.css">
+<style>
+.elevation { display: flex; align-items: center; justify-content: center; height: 100%; gap: 0; }
+.layer { padding: 24px 28px; border: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 4px; }
+.layer-name { font-size: 11px; font-weight: 600; color: var(--color-text); }
+.layer-hex { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); }
+.layer-role { font-size: 10px; color: var(--color-text-muted); }
+.l0 { background: #090d12; }
+.l1 { background: #0c1824; margin: -8px; z-index: 1; }
+.l2 { background: #132535; margin: -16px; z-index: 2; }
+.note { font-size: 10px; color: var(--color-text-disabled); text-align: center; margin-top: 12px; font-style: italic; }
+</style>
+</head><body>
+<div class="card">
+<div class="elevation">
+  <div class="layer l0">
+    <div class="layer-name">Layer 0 · base</div>
+    <div class="layer-hex">#090d12</div>
+    <div class="layer-role">Popup background</div>
+    <div class="layer l1" style="margin-top: 8px;">
+      <div class="layer-name">Layer 1 · surface</div>
+      <div class="layer-hex">#0c1824</div>
+      <div class="layer-role">Cards · inputs · rows</div>
+      <div class="layer l2" style="margin-top: 8px;">
+        <div class="layer-name">Layer 2 · raised</div>
+        <div class="layer-hex">#132535</div>
+        <div class="layer-role">Hover · selected</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="note">No box-shadow. Ever. Depth via background only · separation via 1px #142030 border.</div>
+</div>
+</body></html>
