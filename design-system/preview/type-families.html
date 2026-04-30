@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+<link rel="stylesheet" href="_card.css">
+<style>
+.fam { padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+.fam:last-child { border-bottom: none; }
+.fam-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--color-text-muted); margin-bottom: 4px; font-weight: 600; }
+.fam-stack { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-disabled); margin-bottom: 8px; }
+.fam-sample { color: var(--color-text); }
+</style>
+</head><body>
+<div class="card">
+<div class="fam">
+  <div class="fam-label">Sans · IBM Plex Sans · Body / UI / All chrome</div>
+  <div class="fam-stack">'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif</div>
+  <div class="fam-sample" style="font-family: var(--font-sans); font-size: 16px;">The quick brown fox exports 10 tables today.</div>
+  <div class="fam-sample muted-text" style="font-family: var(--font-sans); font-size: 12px; margin-top: 4px;">Engineered humanist · 7 weights loaded · system fallback if blocked</div>
+</div>
+<div class="fam">
+  <div class="fam-label">Mono · JetBrains Mono · License keys + filenames only</div>
+  <div class="fam-stack">'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace</div>
+  <div class="fam-sample t-mono" style="font-size: 14px;">snapcsv-export-2026-04-30-143022.csv</div>
+  <div class="fam-sample t-mono muted-text" style="font-size: 12px; margin-top: 4px;">XXXX-XXXX-XXXX-XXXX-XXXX</div>
+</div>
+</div>
+</body></html>

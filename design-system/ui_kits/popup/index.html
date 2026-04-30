@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnapCSV — Popup UI Kit</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-shell">
+    <div class="demo-strip">SnapCSV · 360 × auto · click states to drive the demo</div>
+    <div id="root"></div>
+    <div class="demo-controls" id="controls"></div>
+  </div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="TableList.jsx"></script>
+  <script type="text/babel" src="PreviewPanel.jsx"></script>
+  <script type="text/babel" src="UpgradePanel.jsx"></script>
+  <script type="text/babel" src="LicensePanel.jsx"></script>
+  <script type="text/babel" src="SuccessState.jsx"></script>
+  <script type="text/babel" src="Popup.jsx"></script>
+
+  <script type="text/babel">
+    const SCENES = [
+      { id: 'scanning', label: 'Scanning', state: 'scanning', sub: null, exports: 0, pro: false },
+      { id: 'empty', label: 'Empty', state: 'empty', sub: null, exports: 0, pro: false },
+      { id: 'list', label: 'Table list', state: 'list', sub: null, exports: 2, pro: false },
+      { id: 'list-nudge', label: 'List + soft nudge', state: 'list', sub: null, exports: 8, pro: false },
+      { id: 'preview', label: 'Preview', state: 'preview', sub: null, exports: 2, pro: false },
+      { id: 'preview-nh', label: 'Preview · no headers', state: 'preview', sub: 1, exports: 2, pro: false },
+      { id: 'success', label: 'Success', state: 'success', sub: 'snapcsv-export-2026-04-30-143022.csv', exports: 3, pro: false },
+      { id: 'upgrade', label: 'Upgrade', state: 'upgrade', sub: null, exports: 10, pro: false },
+      { id: 'license', label: 'License', state: 'license', sub: null, exports: 10, pro: false },
+      { id: 'license-error', label: 'License · error', state: 'license', sub: 'error', exports: 10, pro: false },
+      { id: 'license-slow', label: 'License · slow', state: 'license', sub: 'slow', exports: 10, pro: false },
+      { id: 'pro-list', label: 'Pro · list', state: 'list', sub: null, exports: 0, pro: true },
+    ];
+
+    function App() {
+      const [sceneId, setSceneId] = React.useState('list');
+      const scene = SCENES.find(s => s.id === sceneId) || SCENES[0];
+      const [state, setState] = React.useState(scene.state);
+      const [sub, setSub] = React.useState(scene.sub);
+      const [exportsToday, setExportsToday] = React.useState(scene.exports);
+      const [isPro, setIsPro] = React.useState(scene.pro);
+
+      React.useEffect(() => {
+        // For preview panel, sub needs to be a table object — pick from MOCK_TABLES
+        if (scene.state === 'preview') {
+          const tbl = window.__previewSub === undefined
+            ? null
+            : null;
+          // Use first mock; for "no headers" variant (sub=1) use the second
+          const idx = scene.sub === 1 ? 1 : 0;
+          // Lazy-grab MOCK_TABLES through global
+          const tables = (window.__MOCK_TABLES__ || []);
+          setSub(tables[idx] || { id: idx + 1, name: scene.sub === 1 ? 'Quarterly results' : 'Table 1', rows: 24, cols: 6, hasHeaders: scene.sub !== 1, data: { headers: ['A','B','C','D'], rows: [['1','2','3','4']] } });
+        } else {
+          setSub(scene.sub);
+        }
+        setState(scene.state);
+        setExportsToday(scene.exports);
+        setIsPro(scene.pro);
+      }, [sceneId]);
+
+      return (
+        <Popup
+          state={state}
+          setState={setState}
+          sub={sub}
+          setSub={setSub}
+          exportsToday={exportsToday}
+          isPro={isPro}
+        />
+      );
+    }
+
+    function Controls({ active, onSelect }) {
+      return SCENES.map(s => (
+        <button
+          key={s.id}
+          type="button"
+          className={`demo-btn ${active === s.id ? 'active' : ''}`}
+          onClick={() => onSelect(s.id)}
+        >{s.label}</button>
+      ));
+    }
+
+    // Wait one tick for Popup.jsx to define MOCK_TABLES
+    setTimeout(() => {
+      // Capture MOCK_TABLES if defined in closure — fall back to inline below
+      window.__MOCK_TABLES__ = [
+        { id: 1, name: 'Table 1', rows: 24, cols: 6, hasHeaders: true, data: { headers: ['Quarter', 'Revenue', 'Growth', 'Region', 'Owner', 'Status'], rows: [['Q1 2026', '$4.2M', '+18%', 'NA', 'A. Park', 'Closed'], ['Q2 2026', '$5.1M', '+22%', 'EU', 'L. Vega', 'Closed'], ['Q3 2026', '$5.8M', '+14%', 'APAC', 'M. Tan', 'Open']] } },
+        { id: 2, name: 'Quarterly results', rows: 128, cols: 9, hasHeaders: false, data: { headers: ['col 1', 'col 2', 'col 3', 'col 4'], rows: [['2026-01-01', 'open', '142.50', '0.034'], ['2026-01-02', 'open', '143.10', '0.012'], ['2026-01-03', 'closed', '141.80', '-0.018']] } },
+      ];
+
+      function Root() {
+        const [sceneId, setSceneId] = React.useState('list');
+        return (
+          <>
+            {ReactDOM.createPortal(<Controls active={sceneId} onSelect={setSceneId} />, document.getElementById('controls'))}
+            <KeyedApp sceneId={sceneId} />
+          </>
+        );
+      }
+      function KeyedApp({ sceneId }) {
+        // Reset App when scene changes by keying
+        return <AppForScene key={sceneId} sceneId={sceneId} />;
+      }
+      function AppForScene({ sceneId }) {
+        const scene = SCENES.find(s => s.id === sceneId) || SCENES[0];
+        const [state, setState] = React.useState(scene.state);
+        const [sub, setSub] = React.useState(() => {
+          if (scene.state === 'preview') {
+            return (window.__MOCK_TABLES__ || [])[scene.sub === 1 ? 1 : 0];
+          }
+          return scene.sub;
+        });
+        const [exportsToday, setExportsToday] = React.useState(scene.exports);
+        const [isPro, setIsPro] = React.useState(scene.pro);
+        return <Popup state={state} setState={setState} sub={sub} setSub={setSub} exportsToday={exportsToday} isPro={isPro} />;
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Root />);
+    }, 0);
+  </script>
+</body>
+</html>

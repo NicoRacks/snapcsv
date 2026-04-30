@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SnapCSV — Design System</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); font-size: 13px; line-height: 1.5; padding: 64px 48px 96px; }
+.wrap { max-width: 1100px; margin: 0 auto; }
+
+/* Hero */
+.hero { display: flex; align-items: flex-start; gap: 32px; padding-bottom: 40px; border-bottom: 1px solid var(--color-border); margin-bottom: 56px; }
+.hero-eyebrow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--color-text-muted); margin-bottom: 12px; }
+.hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.4px; color: var(--color-text); margin-bottom: 12px; }
+.hero p { font-size: 14px; color: var(--color-text-muted); max-width: 620px; line-height: 1.6; }
+.hero-meta { display: flex; gap: 24px; margin-top: 20px; font-family: var(--font-mono); font-size: 11px; color: var(--color-text-disabled); }
+.hero-meta strong { color: var(--color-accent); font-weight: 600; }
+
+/* Section */
+section { margin-bottom: 64px; }
+.section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border); }
+.section-num { font-family: var(--font-mono); font-size: 11px; color: var(--color-accent); font-weight: 600; }
+.section-head h2 { font-size: 18px; font-weight: 600; color: var(--color-text); letter-spacing: -0.1px; }
+.section-head .desc { color: var(--color-text-muted); font-size: 12px; margin-left: auto; }
+
+/* Token table */
+.token-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.token-table th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--color-text-muted); border-bottom: 1px solid var(--color-border); }
+.token-table td { padding: 10px 12px; border-bottom: 1px solid var(--color-border); color: var(--color-text); vertical-align: middle; }
+.token-table td.token { font-family: var(--font-mono); color: var(--color-text); }
+.token-table td.hex { font-family: var(--font-mono); color: var(--color-text-muted); }
+.token-table td.note { color: var(--color-text-muted); }
+.token-chip { display: inline-block; width: 32px; height: 18px; border-radius: 4px; vertical-align: middle; margin-right: 8px; border: 1px solid var(--color-border); }
+
+/* Color section */
+.color-cluster-title { font-size: 12px; font-weight: 600; color: var(--color-text); margin: 24px 0 8px; }
+
+/* Type specimen */
+.type-specimen { display: grid; grid-template-columns: 140px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--color-border); align-items: baseline; }
+.type-specimen:last-child { border-bottom: none; }
+.type-meta { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); }
+
+/* Spacing */
+.space-row { display: flex; align-items: center; gap: 16px; padding: 8px 0; }
+.space-token { width: 100px; font-family: var(--font-mono); font-size: 12px; color: var(--color-text); }
+.space-bar { height: 16px; background: var(--color-accent); border-radius: 2px; }
+.space-note { font-size: 11px; color: var(--color-text-muted); flex: 1; }
+
+/* Radii row */
+.radii-row { display: flex; gap: 24px; align-items: flex-end; }
+.r-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.r-cell .r-shape { width: 90px; height: 64px; background: var(--color-surface-raised); border: 1px solid var(--color-border); }
+.r-cell .r-label { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); text-align: center; line-height: 1.4; }
+
+/* Elevation diagram */
+.elev-stack { display: flex; gap: 16px; align-items: stretch; }
+.elev-layer { flex: 1; padding: 18px 16px; border: 1px solid var(--color-border); border-radius: 4px; display: flex; flex-direction: column; gap: 4px; }
+.elev-layer .name { font-size: 12px; font-weight: 600; color: var(--color-text); }
+.elev-layer .hex { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); }
+.elev-layer .role { font-size: 11px; color: var(--color-text-muted); margin-top: 4px; }
+
+/* Component grid */
+.comp-grid { display: grid; grid-template-columns: 360px 1fr; gap: 32px; align-items: flex-start; }
+.comp-grid.wide { grid-template-columns: 1fr 1fr; }
+.comp-frame { width: 360px; background: var(--color-bg); border: 1px solid var(--color-border); }
+.comp-meta { font-size: 12px; color: var(--color-text-muted); line-height: 1.7; }
+.comp-meta h4 { font-size: 13px; font-weight: 600; color: var(--color-text); margin-bottom: 8px; }
+.comp-meta code { font-family: var(--font-mono); font-size: 11px; color: var(--color-accent); background: var(--color-accent-muted); padding: 1px 4px; border-radius: 3px; }
+.comp-meta ul { list-style: none; padding: 0; }
+.comp-meta li { padding: 4px 0; padding-left: 14px; position: relative; }
+.comp-meta li::before { content: '·'; position: absolute; left: 0; color: var(--color-text-disabled); }
+
+/* Imports of component CSS via inline rules — match popup */
+.sc-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px 9px; background: var(--color-surface); border-bottom: 1px solid var(--color-border); height: 40px; }
+.sc-logo-icon { font-size: 16px; color: var(--color-accent); line-height: 1; }
+.sc-logo-text { font-size: 14px; font-weight: 700; letter-spacing: 0.3px; color: var(--color-text); margin-left: 7px; }
+.sc-pro-badge { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; background: var(--color-accent); color: #fff; border-radius: 4px; padding: 2px 6px; }
+.sc-item { display: flex; align-items: center; padding: 9px 14px 9px 11px; border-left: 3px solid transparent; gap: 10px; }
+.sc-item-index { font-size: 11px; font-weight: 600; color: var(--color-text-muted); min-width: 18px; }
+.sc-item-name { font-size: 13px; font-weight: 500; }
+.sc-item-meta { font-size: 11px; color: var(--color-text-muted); margin-top: 1px; }
+.sc-item-arrow { font-size: 13px; color: var(--color-text-disabled); }
+.sc-item.h { background: var(--color-surface-raised); border-left-color: var(--color-border); }
+.sc-item.s { background: var(--color-surface-raised); border-left-color: var(--color-accent); }
+.btn-row { display: flex; gap: 8px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 16px; font-size: 13px; font-weight: 600; border-radius: 6px; border: none; font-family: var(--font-sans); cursor: pointer; }
+.btn-p { background: var(--color-accent); color: #fff; }
+.btn-p.h { background: var(--color-accent-hover); }
+.btn-p.f { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.btn-p.d { background: var(--color-surface-raised); color: var(--color-text-disabled); cursor: not-allowed; }
+.btn-s { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-muted); padding: 7px 14px; font-size: 12px; font-weight: 500; }
+.btn-s.h { border-color: var(--color-accent); color: var(--color-text); }
+.btn-g { background: none; border: none; color: var(--color-text-disabled); font-size: 12px; padding: 7px 0; cursor: pointer; }
+
+/* A11y / motion */
+.kv { display: grid; grid-template-columns: 200px 1fr; gap: 8px 16px; font-size: 12px; }
+.kv dt { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 11px; }
+.kv dd { color: var(--color-text); }
+.kv dd code { font-family: var(--font-mono); font-size: 11px; color: var(--color-accent); }
+
+/* Do/Don't */
+.dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.dodont-col { padding: 18px; border: 1px solid var(--color-border); border-radius: 8px; }
+.dodont-col.do { border-color: var(--color-success-border); background: var(--color-success-bg); }
+.dodont-col.dont { border-color: #3a1010; background: #170808; }
+.dodont-col h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.dodont-col.do h3 { color: var(--color-success); }
+.dodont-col.dont h3 { color: var(--color-error); }
+.dodont-col ul { list-style: none; padding: 0; }
+.dodont-col li { font-size: 12px; padding: 4px 0; line-height: 1.5; color: var(--color-text); }
+.dodont-col.do li::before { content: '✓ '; color: var(--color-success); margin-right: 4px; }
+.dodont-col.dont li::before { content: '✗ '; color: var(--color-error); margin-right: 4px; }
+
+/* CSS block */
+.code-block { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 6px; padding: 16px 20px; font-family: var(--font-mono); font-size: 11px; line-height: 1.7; color: var(--color-text); overflow-x: auto; white-space: pre; }
+.code-block .c { color: var(--color-text-muted); }
+.code-block .v { color: var(--color-accent); }
+
+/* Footer */
+footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--color-border); font-size: 11px; color: var(--color-text-disabled); display: flex; justify-content: space-between; }
+
+/* Reused tiny components */
+.upgrade-box { border: 1px solid var(--color-upgrade-border); border-radius: 8px; background: var(--color-upgrade-bg); padding: 14px; }
+.upgrade-title { font-size: 13px; font-weight: 700; color: var(--color-upgrade); margin-bottom: 6px; }
+.upgrade-body { font-size: 12px; color: var(--color-upgrade-muted); line-height: 1.5; margin-bottom: 12px; }
+.upgrade-actions { display: flex; flex-direction: column; gap: 7px; }
+.btn-up { background: var(--color-upgrade); color: #000; padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; text-align: center; border: none; cursor: pointer; font-family: var(--font-sans); }
+.success-box { display: flex; align-items: center; gap: 12px; background: var(--color-success-bg); border: 1px solid var(--color-success-border); border-radius: 8px; padding: 14px 16px; margin: 10px; }
+.success-icon { font-size: 22px; color: var(--color-success); line-height: 1; }
+.success-title { font-size: 14px; font-weight: 700; color: var(--color-success); margin-bottom: 2px; }
+.success-filename { font-size: 11px; color: var(--color-text-muted); font-family: var(--font-mono); }
+.input-row { display: flex; flex-direction: column; gap: 8px; padding: 10px; }
+.lic-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.7px; color: var(--color-text-muted); }
+.lic-input { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 6px; color: var(--color-text); font-size: 12px; font-family: var(--font-mono); padding: 8px 10px; outline: none; width: 100%; }
+.lic-input.focus { border-color: var(--color-accent); }
+.lic-input.error { border-color: var(--color-error); }
+.lic-input::placeholder { color: var(--color-text-disabled); }
+.err-msg { font-size: 11px; color: var(--color-error); }
+.preview-th { background: var(--color-surface); color: var(--color-text-muted); font-weight: 600; padding: 5px 8px; text-align: left; border: 1px solid var(--color-border); font-size: 11px; }
+.preview-td { color: var(--color-text); padding: 4px 8px; border: 1px solid var(--color-border); font-size: 11px; }
+.no-headers { font-size: 11px; color: var(--color-text-muted); background: var(--color-surface); border-bottom: 1px solid var(--color-border); padding: 5px 14px; }
+.preview-header-bar { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--color-border); }
+.back-btn { background: none; border: none; color: var(--color-accent); font-size: 12px; cursor: pointer; }
+.preview-title { font-size: 12px; color: var(--color-text-muted); }
+.footer-nudge { display: flex; align-items: center; justify-content: space-between; padding: 6px 14px; background: var(--color-upgrade-bg); border-top: 1px solid var(--color-upgrade-border); font-size: 11px; color: var(--color-upgrade); }
+.nudge-link { color: var(--color-upgrade); text-decoration: none; font-weight: 600; }
+
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { color: var(--color-accent-hover); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <div class="hero-eyebrow">Design System · Theme: Deep Ocean</div>
+    <h1>SnapCSV</h1>
+    <p>A Chrome extension that exports any webpage HTML table to CSV in one click. The interface is 360px wide, 500px max — panels swap in place, no navigation, no pages. This document is the source of truth for everything you see.</p>
+    <div class="hero-meta">
+      <span>v1.1 · <strong>April 30, 2026</strong></span>
+      <span>20 color tokens</span>
+      <span>7 type roles</span>
+      <span>12 components</span>
+    </div>
+  </div>
+</header>
+
+<!-- ─── 1. Color ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">01</div><h2>Color palette</h2><div class="desc">20 tokens · 5 categories · WCAG AA</div></div>
+
+  <div class="color-cluster-title">Base surfaces — dark navy-black elevation</div>
+  <table class="token-table"><thead><tr><th></th><th>Token</th><th>Hex</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><span class="token-chip" style="background:#090d12"></span></td><td class="token">--color-bg</td><td class="hex">#090d12</td><td class="note">Popup bg, all panels</td></tr>
+    <tr><td><span class="token-chip" style="background:#0c1824"></span></td><td class="token">--color-surface</td><td class="hex">#0c1824</td><td class="note">Cards, inputs, table rows</td></tr>
+    <tr><td><span class="token-chip" style="background:#132535"></span></td><td class="token">--color-surface-raised</td><td class="hex">#132535</td><td class="note">Hover + selected states</td></tr>
+    <tr><td><span class="token-chip" style="background:#142030"></span></td><td class="token">--color-border</td><td class="hex">#142030</td><td class="note">All dividers and outlines</td></tr>
+  </tbody></table>
+
+  <div class="color-cluster-title">Text — all WCAG AA compliant</div>
+  <table class="token-table"><thead><tr><th></th><th>Token</th><th>Hex</th><th>Contrast</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><span class="token-chip" style="background:#d8eaf0"></span></td><td class="token">--color-text</td><td class="hex">#d8eaf0</td><td class="hex">~13:1 AAA</td><td class="note">Primary body, table data</td></tr>
+    <tr><td><span class="token-chip" style="background:#6da8c0"></span></td><td class="token">--color-text-muted</td><td class="hex">#6da8c0</td><td class="hex">~8:1 AAA</td><td class="note">Counts, labels, hints</td></tr>
+    <tr><td><span class="token-chip" style="background:#507a95"></span></td><td class="token">--color-text-disabled</td><td class="hex">#507a95</td><td class="hex">~4.7:1 AA</td><td class="note">Placeholders, inactive</td></tr>
+  </tbody></table>
+
+  <div class="color-cluster-title">Accent — Aqua Teal · primary action</div>
+  <table class="token-table"><thead><tr><th></th><th>Token</th><th>Hex</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><span class="token-chip" style="background:#0ea5b8"></span></td><td class="token">--color-accent</td><td class="hex">#0ea5b8</td><td class="note">Buttons, active, PRO badge</td></tr>
+    <tr><td><span class="token-chip" style="background:#12bcd0"></span></td><td class="token">--color-accent-hover</td><td class="hex">#12bcd0</td><td class="note">Primary button hover</td></tr>
+    <tr><td><span class="token-chip" style="background:#082030"></span></td><td class="token">--color-accent-muted</td><td class="hex">#082030</td><td class="note">Focus ring bg, subtle tints</td></tr>
+    <tr><td><span class="token-chip" style="background:#ffffff"></span></td><td class="token">--color-accent-text</td><td class="hex">#ffffff</td><td class="note">Text on teal surfaces</td></tr>
+  </tbody></table>
+
+  <div class="color-cluster-title">Upgrade — Green · "go" register, not warning</div>
+  <table class="token-table"><thead><tr><th></th><th>Token</th><th>Hex</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><span class="token-chip" style="background:#1adb72"></span></td><td class="token">--color-upgrade</td><td class="hex">#1adb72</td><td class="note">CTA button, limit-reached header</td></tr>
+    <tr><td><span class="token-chip" style="background:#0a1a08"></span></td><td class="token">--color-upgrade-bg</td><td class="hex">#0a1a08</td><td class="note">Upgrade panel background</td></tr>
+    <tr><td><span class="token-chip" style="background:#1a3a15"></span></td><td class="token">--color-upgrade-border</td><td class="hex">#1a3a15</td><td class="note">Upgrade panel border</td></tr>
+    <tr><td><span class="token-chip" style="background:#6aaa7a"></span></td><td class="token">--color-upgrade-muted</td><td class="hex">#6aaa7a</td><td class="note">~7.6:1 · body in upgrade panel</td></tr>
+  </tbody></table>
+
+  <div class="color-cluster-title">Success &amp; Error</div>
+  <table class="token-table"><thead><tr><th></th><th>Token</th><th>Hex</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><span class="token-chip" style="background:#22c55e"></span></td><td class="token">--color-success</td><td class="hex">#22c55e</td><td class="note">Checkmark, success text</td></tr>
+    <tr><td><span class="token-chip" style="background:#071a0a"></span></td><td class="token">--color-success-bg</td><td class="hex">#071a0a</td><td class="note">Success panel background</td></tr>
+    <tr><td><span class="token-chip" style="background:#0f3015"></span></td><td class="token">--color-success-border</td><td class="hex">#0f3015</td><td class="note">Success panel border</td></tr>
+    <tr><td><span class="token-chip" style="background:#ef4444"></span></td><td class="token">--color-error</td><td class="hex">#ef4444</td><td class="note">Invalid key, export failure</td></tr>
+    <tr><td><span class="token-chip" style="background:#1f0808"></span></td><td class="token">--color-error-bg</td><td class="hex">#1f0808</td><td class="note">Error message tint</td></tr>
+  </tbody></table>
+</section>
+
+<!-- ─── 2. Type ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">02</div><h2>Typography</h2><div class="desc">IBM Plex Sans + JetBrains Mono · self-hosted · 10–14px · 2 weights per view max</div></div>
+
+  <div class="type-specimen"><div class="type-meta">10/700 · +0.8</div><div><span style="font-size:10px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#fff; background:var(--color-accent); padding:2px 6px; border-radius:4px;">PRO</span> &nbsp;PRO badge</div></div>
+  <div class="type-specimen"><div class="type-meta">11/400 · 1.3</div><div style="font-size:11px; line-height:1.3;">3 free exports left today. — Caption</div></div>
+  <div class="type-specimen"><div class="type-meta">12/400 · 1.4</div><div style="font-size:12px; line-height:1.4;">24 rows · 6 columns — Body small</div></div>
+  <div class="type-specimen"><div class="type-meta">13/500 · 1.0</div><div style="font-size:13px; font-weight:500;">Export CSV — Button</div></div>
+  <div class="type-specimen"><div class="type-meta">13/400 · 1.5</div><div style="font-size:13px; line-height:1.5;">Table 1 — Body</div></div>
+  <div class="type-specimen"><div class="type-meta">13/600 · 1.2</div><div style="font-size:13px; font-weight:600;">Tables found — Header</div></div>
+  <div class="type-specimen"><div class="type-meta">14/700</div><div style="font-size:14px; font-weight:700; letter-spacing:0.3px;">SnapCSV — Logo text</div></div>
+  <div class="type-specimen"><div class="type-meta">12/400 · mono</div><div style="font-family:var(--font-mono); font-size:12px;">snapcsv-export-2026-04-30-143022.csv — Mono (license keys + filenames only)</div></div>
+
+  <div class="comp-meta" style="margin-top:24px;">
+    <h4>Rules</h4>
+    <ul>
+      <li>Sentence case always. Never title case on buttons.</li>
+      <li>Never exceed 2 font weights per view.</li>
+      <li>Monospace (JetBrains Mono) only for: license key input, exported filename.</li>
+      <li>Sans (IBM Plex Sans) and Mono (JetBrains Mono) bundled as variable .ttf files in <code>assets/fonts/</code> — zero external imports, no CDN, no CSP changes.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─── 3. Spacing ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">03</div><h2>Spacing</h2><div class="desc">6-step scale · 4 → 24px</div></div>
+  <div class="space-row"><div class="space-token">--space-1</div><div class="space-bar" style="width:4px;"></div><div class="space-note"><strong style="color:var(--color-text);">4px</strong> · Icon gaps, tight inline spacing</div></div>
+  <div class="space-row"><div class="space-token">--space-2</div><div class="space-bar" style="width:8px;"></div><div class="space-note"><strong style="color:var(--color-text);">8px</strong> · Between label and value</div></div>
+  <div class="space-row"><div class="space-token">--space-3</div><div class="space-bar" style="width:12px;"></div><div class="space-note"><strong style="color:var(--color-text);">12px</strong> · Standard row vertical padding</div></div>
+  <div class="space-row"><div class="space-token">--space-4</div><div class="space-bar" style="width:16px;"></div><div class="space-note"><strong style="color:var(--color-text);">16px</strong> · Section padding, button padding</div></div>
+  <div class="space-row"><div class="space-token">--space-5</div><div class="space-bar" style="width:20px;"></div><div class="space-note"><strong style="color:var(--color-text);">20px</strong> · Major section gaps</div></div>
+  <div class="space-row"><div class="space-token">--space-6</div><div class="space-bar" style="width:24px;"></div><div class="space-note"><strong style="color:var(--color-text);">24px</strong> · Header / footer height baseline</div></div>
+</section>
+
+<!-- ─── 4. Radii ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">04</div><h2>Border radius</h2><div class="desc">0 / 4 / 6 / 8 — never exceed 8px</div></div>
+  <div class="radii-row">
+    <div class="r-cell"><div class="r-shape" style="border-radius:0;"></div><div class="r-label">0px<br>Popup container · table rows</div></div>
+    <div class="r-cell"><div class="r-shape" style="border-radius:4px;"></div><div class="r-label">4px<br>Badges · list items</div></div>
+    <div class="r-cell"><div class="r-shape" style="border-radius:6px;"></div><div class="r-label">6px<br>Buttons · inputs</div></div>
+    <div class="r-cell"><div class="r-shape" style="border-radius:8px;"></div><div class="r-label">8px<br>Panels (max)</div></div>
+  </div>
+</section>
+
+<!-- ─── 5. Elevation ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">05</div><h2>Elevation</h2><div class="desc">Color-only depth · no box-shadow ever</div></div>
+  <div class="elev-stack">
+    <div class="elev-layer" style="background:#090d12;"><span class="name">Layer 0 · base</span><span class="hex">#090d12</span><span class="role">Popup bg</span></div>
+    <div class="elev-layer" style="background:#0c1824;"><span class="name">Layer 1 · surface</span><span class="hex">#0c1824</span><span class="role">Cards · inputs · rows</span></div>
+    <div class="elev-layer" style="background:#132535;"><span class="name">Layer 2 · raised</span><span class="hex">#132535</span><span class="role">Hover · selected</span></div>
+  </div>
+  <p style="font-size: 11px; color: var(--color-text-disabled); margin-top: 16px; font-style: italic;">Separation via <code style="font-family: var(--font-mono); color: var(--color-accent);">--color-border</code> (#142030). Never <code style="font-family: var(--font-mono); color: var(--color-accent);">box-shadow</code>.</p>
+</section>
+
+<!-- ─── 6. Components ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">06</div><h2>Components</h2><div class="desc">12 components rendered at 360px · all states</div></div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 24px 0 12px; color: var(--color-text);">1 — Header bar</h3>
+  <div class="comp-grid">
+    <div>
+      <div class="comp-frame">
+        <div class="sc-header"><div style="display:flex; align-items:center; gap:7px;"><img src="assets/logo-128.png?v2-1777549362726" width="20" height="20" alt=""><span class="sc-logo-text">SnapCSV</span></div></div>
+      </div>
+      <div class="comp-frame" style="margin-top: 8px;">
+        <div class="sc-header"><div style="display:flex; align-items:center; gap:7px;"><img src="assets/logo-128.png?v2-1777549362726" width="20" height="20" alt=""><span class="sc-logo-text">SnapCSV</span></div><div class="sc-pro-badge">PRO</div></div>
+      </div>
+    </div>
+    <div class="comp-meta"><h4>Specs</h4><ul><li>40px fixed height</li><li>padding <code>0 16px</code> · <code>border-bottom 1px #142030</code></li><li>Logo: 20×20 PNG mark (<code>assets/logo-128.png?v2-1777549362726</code>) aria-hidden + "SnapCSV" 14/700</li><li>PRO badge: 10/700 uppercase, +0.8 tracking, 4px radius</li></ul></div>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 32px 0 12px; color: var(--color-text);">2 — Table list item</h3>
+  <div class="comp-grid">
+    <div class="comp-frame">
+      <div class="sc-item"><div class="sc-item-index">1</div><div style="flex:1;"><div class="sc-item-name">Table 1</div><div class="sc-item-meta">24 rows · 6 columns</div></div><div class="sc-item-arrow">›</div></div>
+      <div class="sc-item h"><div class="sc-item-index">2</div><div style="flex:1;"><div class="sc-item-name">Quarterly results</div><div class="sc-item-meta">128 rows · 9 columns</div></div><div class="sc-item-arrow">›</div></div>
+      <div class="sc-item s"><div class="sc-item-index">3</div><div style="flex:1;"><div class="sc-item-name">Holdings</div><div class="sc-item-meta">42 rows · 5 columns</div></div><div class="sc-item-arrow">›</div></div>
+    </div>
+    <div class="comp-meta"><h4>States · default · hover · selected</h4><ul><li>padding <code>9px 14px</code> · gap 10px</li><li><code>border-left: 3px solid transparent</code> reserved on every state — layout never shifts</li><li>Hover: bg <code>#132535</code>, border-left <code>#142030</code></li><li>Selected: same bg, border-left <code>#0ea5b8</code></li><li><code>role="button" tabindex="0"</code> · Enter/Space activate</li></ul></div>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 32px 0 12px; color: var(--color-text);">3 — Buttons</h3>
+  <div class="comp-grid wide">
+    <div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button class="btn btn-p" type="button">Export CSV</button>
+        <button class="btn btn-p h" type="button">Export CSV · hover</button>
+        <button class="btn btn-p f" type="button">Export CSV · focus</button>
+        <button class="btn btn-p d" type="button" disabled>Export CSV · disabled</button>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button class="btn btn-s" type="button">Activate license key</button>
+        <button class="btn btn-s h" type="button">Activate license key · hover</button>
+        <button class="btn btn-g" type="button">Maybe later</button>
+        <button class="btn-up" type="button" style="background:var(--color-upgrade); color:#000;">Upgrade — $19 one-time</button>
+      </div>
+    </div>
+  </div>
+  <div class="comp-meta" style="margin-top:16px;">
+    <ul>
+      <li><strong>Primary:</strong> bg <code>#0ea5b8</code> → hover <code>#12bcd0</code> → active <code>#0a96aa</code> · 6px radius · 8/16 padding · 13/600</li>
+      <li><strong>Secondary:</strong> transparent · 1px <code>#142030</code> border · text muted → on hover, border becomes accent, text brightens</li>
+      <li><strong>Ghost:</strong> no border, no bg · text <code>#507a95</code> → <code>#6da8c0</code> on hover</li>
+      <li><strong>Upgrade:</strong> bg <code>#1adb72</code> · text <code>#000</code> · only used inside the upgrade panel</li>
+      <li>All buttons use explicit <code>type="button"</code></li>
+    </ul>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 32px 0 12px; color: var(--color-text);">4 — Preview panel</h3>
+  <div class="comp-grid">
+    <div class="comp-frame">
+      <div class="preview-header-bar"><button class="back-btn" type="button">← Back</button><span class="preview-title">Quarterly results</span></div>
+      <div class="no-headers">⚠ No headers detected — first row is data</div>
+      <div style="padding: 10px 14px;">
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead><tr><th class="preview-th">Quarter</th><th class="preview-th">Revenue</th><th class="preview-th">Growth</th></tr></thead>
+          <tbody>
+            <tr><td class="preview-td">Q1 2026</td><td class="preview-td">$4.2M</td><td class="preview-td">+18%</td></tr>
+            <tr><td class="preview-td" style="background: var(--color-surface);">Q2 2026</td><td class="preview-td" style="background: var(--color-surface);">$5.1M</td><td class="preview-td" style="background: var(--color-surface);">+22%</td></tr>
+            <tr><td class="preview-td">Q3 2026</td><td class="preview-td">$5.8M</td><td class="preview-td">+14%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding: 10px 14px 12px; border-top: 1px solid var(--color-border);"><button class="btn btn-p" style="width:100%;" type="button">Export CSV</button></div>
+    </div>
+    <div class="comp-meta"><h4>Preview header + no-headers strip + 3-row table + export</h4><ul><li>Header: ← Back (teal, 12px) + table title (muted, ellipsis)</li><li>Notice strip: 11px muted on surface bg, only when no headers detected</li><li>Table: <code>border-collapse</code>, 11px font, alternating row bg via <code>:nth-child(even)</code></li><li>Max 3 data rows shown</li><li><code>.sr-only</code> &lt;caption&gt; injected for screen readers</li></ul></div>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 32px 0 12px; color: var(--color-text);">5 — Upgrade prompt panel</h3>
+  <div class="comp-grid">
+    <div class="comp-frame" style="padding: 14px;">
+      <button class="back-btn" type="button" style="margin-bottom: 6px;">← Back</button>
+      <div class="upgrade-box">
+        <p class="upgrade-title">Daily limit reached</p>
+        <p class="upgrade-body">You've exported 10 tables today.<br>Upgrade to SnapCSV Pro for unlimited exports.</p>
+        <div class="upgrade-actions">
+          <button class="btn-up" type="button">Upgrade — $19 one-time</button>
+          <button class="btn btn-s" type="button">Activate license key</button>
+          <button class="btn-g" type="button">Maybe later</button>
+        </div>
+      </div>
+    </div>
+    <div class="comp-meta"><h4>The "go" register</h4><ul><li>Bg <code>#0a1a08</code> · border <code>1px #1a3a15</code> · 8px radius · 14px padding</li><li>Title 13/700 in <code>#1adb72</code></li><li>Body 12/1.5 in <code>#6aaa7a</code> (~7.6:1)</li><li>Actions stack vertically with 7px gap: upgrade · secondary · ghost</li><li>Never shown simultaneously with the footer nudge</li></ul></div>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 32px 0 12px; color: var(--color-text);">6 — License input panel</h3>
+  <div class="comp-grid wide">
+    <div class="comp-frame">
+      <div class="input-row">
+        <label class="lic-label">Activate Pro License</label>
+        <input class="lic-input" type="text" placeholder="Paste your license key…" readonly>
+        <div style="display:flex; gap:8px;"><button class="btn btn-p" style="flex:1;" type="button">Activate</button><button class="btn-g" style="width:auto; padding:7px 12px;" type="button">Cancel</button></div>
+      </div>
+    </div>
+    <div class="comp-frame">
+      <div class="input-row">
+        <label class="lic-label">Activate Pro License</label>
+        <input class="lic-input error" type="text" value="WRONG-KEY-123" readonly>
+        <div style="display:flex; gap:8px;"><button class="btn btn-p" style="flex:1;" type="button">Activate</button><button class="btn-g" style="width:auto; padding:7px 12px;" type="button">Cancel</button></div>
+        <div class="err-msg" role="alert">Invalid license key.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 32px 0 12px; color: var(--color-text);">7 — Success state</h3>
+  <div class="comp-grid">
+    <div class="comp-frame">
+      <div class="success-box">
+        <span class="success-icon" aria-hidden="true">✓</span>
+        <div><div class="success-title">Exported!</div><div class="success-filename">snapcsv-export-2026-04-30-143022.csv</div></div>
+      </div>
+    </div>
+    <div class="comp-meta"><h4>Auto-dismisses 3s · returns to list</h4><ul><li>Bg <code>#071a0a</code> · border <code>1px #0f3015</code> · 8px radius</li><li>Checkmark 22px in <code>#22c55e</code> (separate from upgrade green!)</li><li>Filename in monospace, 11px muted</li><li><code>aria-live="polite"</code> on the container</li></ul></div>
+  </div>
+
+  <h3 style="font-size: 13px; font-weight: 600; margin: 32px 0 12px; color: var(--color-text);">8 — Footer nudge</h3>
+  <div class="comp-grid">
+    <div>
+      <div class="comp-frame"><div class="footer-nudge"><span>3 free exports left today.</span><a class="nudge-link" href="#" aria-label="Go Pro, opens in new tab">Go Pro →</a></div></div>
+      <div class="comp-frame" style="margin-top: 8px;"><div class="footer-nudge"><span>No free exports left today.</span><a class="nudge-link" href="#" aria-label="Go Pro, opens in new tab">Go Pro →</a></div></div>
+      <div class="comp-frame" style="margin-top: 8px;"><div class="footer-nudge" style="background:var(--color-surface); border-top-color:var(--color-border); color:var(--color-text-muted);"><span>Unlimited exports · Pro</span><span style="color:var(--color-text-disabled);">—</span></div></div>
+    </div>
+    <div class="comp-meta"><h4>Soft / hard / Pro variants</h4><ul><li>Bg <code>#0a1a08</code> · border-top <code>1px #1a3a15</code> · 11px text</li><li>Padding <code>6px 14px</code> · flex space-between</li><li>Pro variant: surface bg, muted text — no green</li><li><code>aria-live="polite" aria-atomic="true"</code> on the container</li><li>Never shown simultaneously with the upgrade panel</li></ul></div>
+  </div>
+</section>
+
+<!-- ─── 7. Accessibility ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">07</div><h2>Accessibility</h2><div class="desc">WCAG 2.1 AA target</div></div>
+  <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 12px;">Focus rings</h4>
+  <p style="font-size: 12px; color: var(--color-text-muted); margin-bottom: 24px;"><code style="font-family: var(--font-mono); color: var(--color-accent);">2px solid #0ea5b8</code>, offset 2px, 4px radius. Inputs use <code style="font-family: var(--font-mono); color: var(--color-accent);">border-color</code> swap instead.</p>
+
+  <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 12px;">ARIA patterns</h4>
+  <dl class="kv">
+    <dt>Decorative icons</dt><dd><code>aria-hidden="true"</code></dd>
+    <dt>Error messages</dt><dd><code>role="alert"</code></dd>
+    <dt>Status messages</dt><dd><code>role="status" aria-live="polite"</code></dd>
+    <dt>Footer nudge</dt><dd><code>aria-live="polite" aria-atomic="true"</code></dd>
+    <dt>External links</dt><dd><code>aria-label="[action], opens in new tab"</code> + <code>rel="noopener noreferrer"</code></dd>
+    <dt>Table list items</dt><dd><code>role="button" tabindex="0"</code> + Enter / Space activation</dd>
+    <dt>Inputs</dt><dd><code>aria-describedby</code> linking to error id</dd>
+    <dt>Buttons</dt><dd>Explicit <code>type="button"</code> on every &lt;button&gt;</dd>
+    <dt>Spinner</dt><dd><code>aria-hidden="true"</code> + <code>prefers-reduced-motion</code> respected</dd>
+    <dt>Table preview</dt><dd><code>.sr-only</code> &lt;caption&gt; injected for screen readers</dd>
+  </dl>
+</section>
+
+<!-- ─── 8. Motion ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">08</div><h2>Motion</h2><div class="desc">150ms — that's the entire vocabulary</div></div>
+  <dl class="kv">
+    <dt>Hover transitions</dt><dd><code>150ms ease</code></dd>
+    <dt>Panel switches</dt><dd>Instant — no animation</dd>
+    <dt>Spinner</dt><dd>CSS keyframe · disabled under <code>prefers-reduced-motion</code></dd>
+    <dt>Forbidden</dt><dd>No spring · no bounce · no transitions &gt; 150ms</dd>
+  </dl>
+</section>
+
+<!-- ─── 9. Do/Don't ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">09</div><h2>Do's and don'ts</h2><div class="desc">Quick scan</div></div>
+  <div class="dodont">
+    <div class="dodont-col do">
+      <h3>Do</h3>
+      <ul>
+        <li>CSS variables only — never hardcode hex outside <code>:root</code></li>
+        <li>Sans = IBM Plex Sans, Mono = JetBrains Mono — system stack as fallback</li>
+        <li>Green <code>#1adb72</code> exclusively for upgrade / limit</li>
+        <li>Green <code>#22c55e</code> exclusively for export success</li>
+        <li>Monospace only for license keys + filenames</li>
+        <li><code>type="button"</code> on every &lt;button&gt;</li>
+        <li>Sentence case on all button labels</li>
+      </ul>
+    </div>
+    <div class="dodont-col dont">
+      <h3>Don't</h3>
+      <ul>
+        <li>No <code>box-shadow</code> — ever</li>
+        <li>No <code>border-radius</code> &gt; 8px</li>
+        <li>No transitions &gt; 150ms</li>
+        <li>No font families besides IBM Plex Sans + JetBrains Mono (and the system fallback)</li>
+        <li>No purple, amber, or orange</li>
+        <li>No title case on button labels</li>
+        <li>No popup width changes — 360px is fixed</li>
+        <li>No showing footer nudge AND upgrade panel together</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 10. CSS block ─────────────────────────────────────── -->
+<section>
+  <div class="section-head"><div class="section-num">10</div><h2>Full <code style="font-family: var(--font-mono); color: var(--color-accent);">:root</code> block</h2><div class="desc">Copy directly into popup.css</div></div>
+  <div class="code-block">:root {
+  <span class="c">/* Base — Deep Ocean */</span>
+  --color-bg:                <span class="v">#090d12</span>;
+  --color-surface:           <span class="v">#0c1824</span>;
+  --color-surface-raised:    <span class="v">#132535</span>;
+  --color-border:            <span class="v">#142030</span>;
+
+  <span class="c">/* Text */</span>
+  --color-text:              <span class="v">#d8eaf0</span>;
+  --color-text-muted:        <span class="v">#6da8c0</span>;
+  --color-text-disabled:     <span class="v">#507a95</span>;
+
+  <span class="c">/* Accent — Aqua Teal */</span>
+  --color-accent:            <span class="v">#0ea5b8</span>;
+  --color-accent-hover:      <span class="v">#12bcd0</span>;
+  --color-accent-muted:      <span class="v">#082030</span>;
+  --color-accent-text:       <span class="v">#ffffff</span>;
+
+  <span class="c">/* Upgrade — Green (go register) */</span>
+  --color-upgrade:           <span class="v">#1adb72</span>;
+  --color-upgrade-bg:        <span class="v">#0a1a08</span>;
+  --color-upgrade-border:    <span class="v">#1a3a15</span>;
+  --color-upgrade-muted:     <span class="v">#6aaa7a</span>;
+
+  <span class="c">/* Success — Green */</span>
+  --color-success:           <span class="v">#22c55e</span>;
+  --color-success-bg:        <span class="v">#071a0a</span>;
+  --color-success-border:    <span class="v">#0f3015</span>;
+
+  <span class="c">/* Error */</span>
+  --color-error:             <span class="v">#ef4444</span>;
+  --color-error-bg:          <span class="v">#1f0808</span>;
+
+  <span class="c">/* Spacing */</span>
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-5: 20px;  --space-6: 24px;
+}</div>
+</section>
+
+<footer>
+  <div>SnapCSV Design System · Deep Ocean v1.1 · April 30, 2026</div>
+  <div>© 2026 Blank Canvas Ventures LLC</div>
+</footer>
+
+</div>
+</body>
+</html>

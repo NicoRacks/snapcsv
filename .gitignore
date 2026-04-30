@@ -1,40 +1,13 @@
-# macOS
+# Local previews + scratch
+_check/
+uploads/
+
+# Redundant root copy of fonts (canonical lives in assets/fonts/)
+fonts/
+
+# OS / editor
 .DS_Store
-
-# Claude Code local config
-.claude/
-
-# Node dependencies (only sharp used for icon generation — not needed in repo)
-node_modules/
-package-lock.json
-
-# Internal strategy & planning docs (not for public consumption)
-Markdowns/
-
-# Icon generation scripts (internal tooling)
-generate-concepts.py
-generate-icons.py
-generate-icons.js
-generate-refined.py
-explore-concepts.py
-
-# Concept / draft assets (not production)
-icons/concept-*.png
-icons/refined-*.png
-icons/brand/
-icons/concept-SHEET.png
-icons/refined-SHEET.png
-icons/ui/
-
-# Internal reference files
-discovery_team_org_chart.svg
-micro_saas_chrome_extension_roadmap.svg
-snapcsv-claude-code-fix-prompt.md
-snapcsv-color-themes.html
-ICON-DESIGN-BRIEF.md
-
-# Dev test pages (not part of the extension)
-test-page.html
-
-# Empty scratch folders
-files/
+Thumbs.db
+*.swp
+.vscode/
+.idea/

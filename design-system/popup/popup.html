@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/IBMPlexSans-Italic-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Variable.ttf">
+  <meta name="ext-resource-dependency" content="assets/fonts/JetBrainsMono-Italic-Variable.ttf">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnapCSV</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-logo">
+        <img class="logo-mark" src="../assets/logo-128.png?v2-1777549362726" width="20" height="20" alt="" aria-hidden="true">
+        <span class="logo-text">SnapCSV</span>
+      </div>
+      <div id="pro-badge" class="pro-badge hidden">PRO</div>
+    </header>
+
+    <!-- Scanning state -->
+    <div id="scanning" class="state-panel" aria-live="polite">
+      <div class="spinner"></div>
+      <p class="state-label">Scanning page…</p>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="state-panel hidden">
+      <p class="empty-icon" aria-label="No tables found">⊘</p>
+      <p class="state-label">No tables found on this page.</p>
+      <p class="state-sub">Try a page with HTML &lt;table&gt; elements.</p>
+    </div>
+
+    <!-- Table list -->
+    <div id="table-list-panel" class="hidden">
+      <p class="panel-title">Tables found</p>
+      <ul id="table-list" class="table-list"></ul>
+    </div>
+
+    <!-- Preview panel -->
+    <div id="preview-panel" class="hidden">
+      <div class="preview-header">
+        <button id="back-btn" class="back-btn">← Back</button>
+        <span id="preview-title" class="preview-title"></span>
+      </div>
+      <div id="no-headers-notice" class="no-headers-notice hidden">
+        ⚠ No headers detected — first row is data
+      </div>
+      <div id="preview-table-wrap" class="preview-table-wrap">
+        <table id="preview-table" class="preview-table"></table>
+      </div>
+      <div id="export-area" class="export-area">
+        <button id="export-btn" class="btn-primary">Export CSV</button>
+      </div>
+    </div>
+
+    <!-- Upgrade prompt -->
+    <div id="upgrade-prompt" class="hidden">
+      <div class="upgrade-nav">
+        <button id="dismiss-upgrade-btn" class="back-btn">← Back</button>
+      </div>
+      <div class="upgrade-box">
+        <p class="upgrade-title">Daily limit reached</p>
+        <p class="upgrade-body">You've exported 10 tables today.<br/>Upgrade to SnapCSV Pro for unlimited exports.</p>
+        <div class="upgrade-actions">
+          <a id="upgrade-link" href="https://snapcsv.lemonsqueezy.com/checkout/buy/a1ccf72e-8954-40c3-9606-259998fe926e" target="_blank" class="btn-primary btn-upgrade">Upgrade — $19 one-time</a>
+          <button id="show-license-btn" class="btn-secondary">Activate license key</button>
+          <button id="maybe-later-btn" class="btn-ghost">Maybe later</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- License input -->
+    <div id="license-input-panel" class="hidden">
+      <div class="license-box">
+        <label for="license-key-input" class="panel-title" style="padding: 0 0 2px; display: block;">Activate Pro License</label>
+        <input id="license-key-input" class="license-input" type="text" placeholder="Paste your license key…" autocomplete="off" spellcheck="false" />
+        <div class="license-actions">
+          <button id="activate-btn" class="btn-primary">Activate</button>
+          <button id="cancel-license-btn" class="btn-ghost">Cancel</button>
+        </div>
+        <p id="license-error" class="license-error hidden"></p>
+        <p id="license-slow-warning" class="license-slow-warning hidden">Taking longer than expected — check your connection.</p>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div id="success-state" class="hidden" aria-live="polite">
+      <div class="success-box">
+        <span class="success-icon" aria-label="Success checkmark">✓</span>
+        <div>
+          <p class="success-title">Exported!</p>
+          <p id="success-filename" class="success-filename"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer nudge (soft upsell) -->
+    <div id="footer-nudge" class="footer-nudge hidden">
+      <span id="nudge-text"></span>
+      <a href="https://snapcsv.lemonsqueezy.com/checkout/buy/a1ccf72e-8954-40c3-9606-259998fe926e" target="_blank" class="nudge-link">Go Pro →</a>
+    </div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
