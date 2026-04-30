@@ -431,7 +431,7 @@ body {
 
 .btn-upgrade {
   background: var(--color-upgrade);
-  color: #000000;
+  color: var(--color-upgrade-text);
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
@@ -441,7 +441,7 @@ body {
 }
 
 .btn-upgrade:hover {
-  background: #16c466;
+  background: var(--color-upgrade-hover);
 }
 
 /* ─── License Input ────────────────────────────────────────── */
