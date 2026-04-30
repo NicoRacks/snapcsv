@@ -4,32 +4,35 @@
    in any prototype to inherit the brand language.
 */
 
-/* Self-hosted variable fonts — no external requests, no CSP changes.
-   One file per family covers all weights via font-weight: 100 900. */
+/* Self-hosted variable fonts — files are exactly as downloaded from Google Fonts
+   (https://fonts.google.com), no re-encoding. IBM Plex Sans exposes wdth + wght
+   axes; JetBrains Mono exposes wght only. License files (OFL 1.1) live alongside. */
 @font-face {
   font-family: 'IBM Plex Sans';
-  src: url('./assets/fonts/IBMPlexSans-Variable.ttf') format('truetype-variations');
+  src: url('./assets/fonts/IBMPlexSans-VariableFont_wdth,wght.ttf') format('truetype-variations');
   font-weight: 100 900;
+  font-stretch: 75% 100%;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'IBM Plex Sans';
-  src: url('./assets/fonts/IBMPlexSans-Italic-Variable.ttf') format('truetype-variations');
+  src: url('./assets/fonts/IBMPlexSans-Italic-VariableFont_wdth,wght.ttf') format('truetype-variations');
   font-weight: 100 900;
+  font-stretch: 75% 100%;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('./assets/fonts/JetBrainsMono-Variable.ttf') format('truetype-variations');
+  src: url('./assets/fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('./assets/fonts/JetBrainsMono-Italic-Variable.ttf') format('truetype-variations');
+  src: url('./assets/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype-variations');
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
@@ -56,9 +59,11 @@
 
   /* ─── Upgrade — Green (go register) ─────────────── */
   --color-upgrade:           #1adb72;
+  --color-upgrade-hover:     #16c466;   /* button hover — slightly darker green */
   --color-upgrade-bg:        #0a1a08;
   --color-upgrade-border:    #1a3a15;
   --color-upgrade-muted:     #6aaa7a;   /* ~7.6:1 body inside upgrade panel */
+  --color-upgrade-text:      #000000;   /* black text on green CTA — ~13:1 */
 
   /* ─── Success — Green (export complete) ─────────── */
   --color-success:           #22c55e;

@@ -3,7 +3,7 @@
 > Drop this file into the project root. Any AI coding agent (Claude Code, Cursor, Copilot) will read it automatically and generate UI that matches SnapCSV's visual language without re-specification in every prompt.
 
 **Product:** SnapCSV — Chrome Extension  
-**Version:** 1.3 — Deep Ocean (Accessible · Typography)  
+**Version:** 1.4 — Deep Ocean (Truth Pass)  
 **Last updated:** April 30, 2026  
 
 ---
@@ -73,19 +73,31 @@
 
 ### Font Stack
 
-**Sans:** IBM Plex Sans (variable, bundled at `design-system/assets/fonts/IBMPlexSans-Variable.ttf`) with system fallback.
+**Sans:** IBM Plex Sans (variable, **`wdth + wght`** axes) with system fallback.
 
 ```css
 font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 ```
 
-**Monospace (for license keys and filenames):** JetBrains Mono (variable, bundled at `design-system/assets/fonts/JetBrainsMono-Variable.ttf`) with system fallback.
+**Monospace (for license keys and filenames):** JetBrains Mono (variable, **`wght`** axis only) with system fallback.
 
 ```css
 font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
 ```
 
-Both families are **self-hosted** as variable `.ttf` files inside the extension package — no CDN, no external requests, no CSP relaxation. The `@font-face` declarations live in `design-system/colors_and_type.css`, which `popup/popup.css` consumes via `@import`. System fallbacks render instantly if the bundled file fails to load.
+Both families are downloaded directly from **Google Fonts** (https://fonts.google.com), preserving the original filenames and OFL license files. They live inside the extension package — no CDN, no external requests, no CSP relaxation:
+
+```
+design-system/assets/fonts/
+  IBMPlexSans-VariableFont_wdth,wght.ttf
+  IBMPlexSans-Italic-VariableFont_wdth,wght.ttf
+  JetBrainsMono-VariableFont_wght.ttf
+  JetBrainsMono-Italic-VariableFont_wght.ttf
+  OFL-IBMPlex.txt
+  OFL-JetBrainsMono.txt
+```
+
+The `@font-face` declarations live in `design-system/colors_and_type.css`, which `popup/popup.css` consumes via `@import`. System fallbacks render instantly if any bundled file fails to load.
 
 Reference these via the canonical CSS variables — `var(--font-sans)` and `var(--font-mono)` — never hardcode the family names.
 
@@ -107,6 +119,7 @@ Reference these via the canonical CSS variables — `var(--font-sans)` and `var(
 - Counts and metadata use `--color-text-muted`.
 - Never exceed 2 font weights on any single view.
 - Monospace always for: license key input, filename display, code snippets.
+- The type scale above governs **text only**. Decorative Unicode glyphs sit at their own sizes outside the scale: `⬡` logo at 16px, `⊘` empty-state icon at 28px, `✓` success checkmark at 22px. Do not size text content at these values.
 
 ---
 
@@ -347,21 +360,28 @@ See Section 8 for `prefers-reduced-motion` requirement.
 
 ---
 
-## 9. Icon Brief
+## 10. Icon Brief
 
-The extension icon sits in the Chrome toolbar at 16px next to 20+ other icons. It is the primary brand touchpoint.
+The extension icon sits in the Chrome toolbar at 16px next to 20+ other icons. It is the primary brand touchpoint. The shipping mark is **v2 brandmark** (labeled `Brand mark · shipping · v2` in `design-system/preview/brand-logo.html`) — canonical files at `design-system/assets/logo-{16,48,128}.png`, mirrored to `icons/icon-{16,48,128}.png` for the manifest.
 
-**Accent color:** `#0ea5b8` aqua-teal — dominant icon color  
-**Background:** `#090d12` deep navy or transparent  
-**Symbol:** Table grid or CSV-related — readable at 16px  
-**Style:** Flat. No gradients, no drop shadow, no fine detail that disappears small.  
-**Sizes:** 16px, 48px, 128px — PNG
+**Composition:**
+- **Chassis:** near-black rounded square (`#090d12`-ish), corner radius ~26px relative to a 500px master
+- **Body:** stylized 3-row data table — narrow index column on the left in lighter teal, three wider data rows on the right in `#0ea5b8` aqua teal, separated by thin chassis-color gutters
+- **Badge:** `#1adb72` green circle with a white downward-arrow glyph, overlapping the bottom-right cell of the table
+- **Style:** Flat. No gradients, no drop shadow, no fine detail that disappears at 16px
 
-**Do not use:** Purple/violet (competitor default), gradients, letter-based marks.
+**File sizes (canonical bytes):** `icon-16.png` = 533 B · `icon-48.png` = 1429 B · `icon-128.png` = 3530 B. Production icons must be byte-identical to the v2 source files; copy from `design-system/assets/logo-*.png` on every brandmark update.
+
+**Versions in the design system:**
+- `logo-{16,48,128}.png` and `logo-v2-*.png` — the canonical shipping v2 mark
+- `logo-v3-*.png` — alternate-direction exploration only, not shipping
+- `assets/legacy/logo-*-mvp.png` — pre-Deep-Ocean MVP versions, archived
+
+**Do not use:** Purple/violet (competitor default and the pre-Deep-Ocean palette), gradients, letter-based marks, drop shadow, or any chassis radius > ~26px.
 
 ---
 
-## 10. Do's and Don'ts  
+## 11. Do's and Don'ts  
 
 ### ✅ Do
 - Use `--color-surface` for all cards and interactive surfaces
@@ -387,7 +407,7 @@ The extension icon sits in the Chrome toolbar at 16px next to 20+ other icons. I
 
 ---
 
-## 11. Full `:root` CSS Variables
+## 12. Full `:root` CSS Variables
 
 Copy this block directly into the top of `popup.css`:
 
@@ -415,9 +435,11 @@ Copy this block directly into the top of `popup.css`:
 
   /* Upgrade — Green (go register) */
   --color-upgrade:           #1adb72;
+  --color-upgrade-hover:     #16c466;  /* button hover — slightly darker green */
   --color-upgrade-bg:        #0a1a08;
   --color-upgrade-border:    #1a3a15;
   --color-upgrade-muted:     #6aaa7a;  /* WCAG AA: ~7.6:1 on upgrade-bg */
+  --color-upgrade-text:      #000000;  /* black text on green CTA — ~13:1 */
 
   /* Success — Green */
   --color-success:           #22c55e;
@@ -462,7 +484,7 @@ Copy this block directly into the top of `popup.css`:
 
 ---
 
-## 12. File Conventions
+## 13. File Conventions
 
 ```
 design-system/colors_and_type.css  ← Canonical tokens (colors + type) + @font-face for bundled fonts. Single source of truth — imported by popup/popup.css.
@@ -478,12 +500,12 @@ icons/icon-*.png    ← Toolbar icons referenced by manifest.json. Copy from des
 
 ---
 
-## 13. Claude Code Session Prompt
+## 14. Claude Code Session Prompt
 
 Start every Claude Code session with:
 
-> *"Read DESIGN.md in the project root before writing any CSS or HTML. Use only the CSS variables defined in Section 11. The theme is Deep Ocean — teal accent (#0ea5b8), green upgrade prompt (#1adb72), navy-black darks (#090d12). Never use purple, amber, or orange in this codebase."*
+> *"Read DESIGN.md in the project root before writing any CSS or HTML. Use only the CSS variables defined in Section 12. The theme is Deep Ocean — teal accent (#0ea5b8), green upgrade prompt (#1adb72), navy-black darks (#090d12). Never use purple, amber, or orange in this codebase."*
 
 ---
 
-*This file is the source of truth for SnapCSV's UI. Theme: Deep Ocean. Adopted April 14, 2026. Accessibility pass: April 30, 2026 (v1.2). Typography pass: April 30, 2026 (v1.3 — bundled IBM Plex Sans + JetBrains Mono, design-system import). When UI decisions diverge from this file, update this file — don't patch individual components.*
+*This file is the source of truth for SnapCSV's UI. Theme: Deep Ocean. Adopted April 14, 2026. Accessibility pass: April 30, 2026 (v1.2). Typography pass: April 30, 2026 (v1.3 — bundled IBM Plex Sans + JetBrains Mono, design-system import). Truth pass: April 30, 2026 (v1.4 — replaced renamed font binaries with the canonical Google Fonts versions, fixed duplicate Section 9 numbering, rewrote Icon Brief for the actual v2 brandmark, added `--color-upgrade-text` / `--color-upgrade-hover` tokens). When UI decisions diverge from this file, update this file — don't patch individual components.*
